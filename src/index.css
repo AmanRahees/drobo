@@ -12,6 +12,16 @@
     src: url("./assets/fonts/Roboto-Bold.ttf");
 }
 
+:root{
+    --primary-color: #1f282d;
+    --secondary-color: #d0dbd3;
+    --dark: #000;
+    --light: #edf0f3;
+    --main-color: #050000;
+    --sub-color: #eb6521;
+    --cube-color: #dbe4e9;
+}
+
 *{
     margin: 0;
     padding: 0;

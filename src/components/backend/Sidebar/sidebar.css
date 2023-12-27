@@ -1,0 +1,143 @@
+.sidebar{
+    background: #000;
+    padding: 10px;
+    border-right: 1px solid #222;
+    width: 300px;
+    min-height: 100vh;
+    z-index: 101;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active{
+    width: 100px;
+}
+
+.sidebar-logo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar.active .sidebar-logo{
+    justify-content: center;
+}
+
+.sidebar-logo h1{
+    color: #fff;
+    font-size: 42px;
+}
+
+.sidebar.active .sidebar-logo h1{
+    display: none;
+}
+
+.sidebar-user{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.sidebar-user-icon{
+    font-size: 52px;
+}
+
+.sidebar.active .sidebar-details{
+    display: none;
+}
+
+.sidebar-Items{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.sidebar-Item{
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+.sidebar-Item.active{
+    background: #111;
+    color: var(--sub-color);
+    border-right: 3px solid var(--sub-color);
+}
+
+.sidebar.active .sidebar-Item{
+    text-align: center;
+}
+
+.sidebar.active .sidebar-Item span{
+    display: none;
+}
+
+@media (max-width:576px) {
+    .sidebar{
+        position: absolute;
+        padding: 10px;
+        border-right: 1px solid #222;
+        width: 90px;
+        min-height: 100vh;
+        z-index: 101;
+        transition: all 0.5s ease;
+    }
+    .sidebar.active{
+        width: 260px;
+    }
+    .sidebar-logo{
+        justify-content: center;
+    }
+    .sidebar.active .sidebar-logo{
+        justify-content: space-between;
+    }
+    .sidebar-logo h1{
+        display: none;
+        color: #fff;
+        font-size: 42px;
+    }
+    .sidebar.active .sidebar-logo h1{
+        display: block;
+    }
+    .sidebar-user{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+    }
+    .sidebar-user-icon{
+        font-size: 52px;
+    }
+    .sidebar-details{
+        display: none;
+    }
+    .sidebar.active .sidebar-details{
+        display: block;
+    }
+    .sidebar-Items{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 20px 0;
+    }
+    .sidebar-Item{
+        font-size: 18px;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    .sidebar-Item.active{
+        background: #111;
+        color: var(--sub-color);
+        border-right: 3px solid var(--sub-color);
+    }
+    .sidebar.active .sidebar-Item{
+        text-align: left;
+    }
+    .sidebar-Item span{
+        display: none;
+    }
+    .sidebar.active .sidebar-Item span{
+        display: inline-block;
+    }
+}

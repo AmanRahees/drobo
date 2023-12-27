@@ -1,0 +1,60 @@
+.pl-authBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    min-height: 100vh;
+}
+
+.pl-authForm{
+    background: #1c1b1e;
+    padding: 20px;
+    border-radius: 8px;
+    outline: 1px solid #333;
+}
+
+.pl-authBox h1{
+    font-size: 42px;
+    color: #fff;
+    text-align: center;
+    pointer-events: none;
+}
+
+.pl-authForm label{
+    color: #fff;
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.pl-authForm input{
+    width: 360px;
+    background: transparent;
+    color: #fff;
+    padding: 8px;
+    border: 1px solid #000;
+    outline: 1px solid #555;
+    border-radius: 6px;
+}
+
+.pl-authForm input:focus{
+    outline: 1px solid var(--sub-color);
+}
+
+.pl-authForm input[type="password"]{
+    padding-right: 50px;
+}
+
+.plPwdEye{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cube-color);
+    cursor: pointer;
+}
+
+@media (max-width:576px) {
+    .pl-authForm input{
+        width: 280px;
+    }
+}

@@ -1,0 +1,51 @@
+@keyframes toastFadeIn {
+    5%{
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    95%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+  
+@keyframes toastProgress {
+    to{
+        transform: scaleX(1);
+    }
+}
+
+.toasterBox{
+    position: absolute;
+    width: max-content;
+    left: 0;
+    right: 0;
+    top: 24px;
+    margin: 0 auto;
+    border-radius: 6px;
+    transform: translateY(30px);
+    opacity: 0;
+    visibility: hidden;
+    animation: toastFadeIn 3s linear;
+}
+
+.toast_message{
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+}
+
+.toast_progress{
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    width: calc(100% - 8px);
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: #fff;
+    border-radius: 12px;
+    animation: toastProgress 2.5s 0.3s linear;
+}
+
