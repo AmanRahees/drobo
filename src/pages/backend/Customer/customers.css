@@ -28,7 +28,7 @@
 
 .userTable th{
     background: #1b1b1b;
-    color: #999;
+    color: var(--cube-color);
     padding: 10px;
     font-size: 18px;
     pointer-events: none;

@@ -1,0 +1,204 @@
+._pdtBox{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+._pdtItem{
+    position: relative;
+    display: block;
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 0;
+    cursor: pointer;
+}
+
+._pdtItem img{
+    aspect-ratio: 1;
+}
+
+._pdtDown{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background: #00000066;
+    backdrop-filter: blur(20px);
+    width: 100%;
+    padding: 22px;
+    height: 32px;
+    overflow: hidden;
+    bottom: 0;
+    left: 0;
+    transition: all 0.3s ease;
+}
+
+._pdtDown span, ._pdtDown button{
+    display: none;
+}
+
+._pdtItem:hover ._pdtDown{
+    display: block;
+    height: 65%;
+}
+
+._pdtItem:hover ._pdtDown span,
+._pdtItem:hover ._pdtDown button{
+    display: block;
+}
+
+._pdtDown h1{
+    font-size: 22px;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+._pdtCheckBox{
+    appearance: none;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #555;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+._pdtCheckBox:checked{
+    background: var(--sub-color);
+}
+
+._pdtCheckBox:checked::after {
+    content: '\2714';
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+/* Add Form */
+
+._pdtForm-container{
+    margin: 20px 0;
+}
+
+._pdtForm-container fieldset{
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 8px;
+}
+
+._pdtForm-container fieldset::-webkit-scrollbar{
+    display: none;
+}
+
+._pdtForm-container legend{
+    padding: 0 5px;
+    font-weight: bolder;
+    color: var(--sub-color);
+}
+
+._pdtFormWrap{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+._pdt_1{
+    width: 65%;
+}
+._pdt_2{
+    width: 35%;
+}
+
+._pdtForm label{
+    display: block;
+    color: var(--cube-color);
+    margin-bottom: 5px;
+}
+
+._pdtForm input,
+._pdt_select,
+._pdtForm textarea{
+    background: transparent;
+    border: 1px solid #333;
+    outline: none;
+    padding: 8px;
+    border-radius: 6px;
+    width: 100%;
+}
+
+._pdtForm textarea{
+    resize: none;
+}
+
+._pdt_select{
+    width: 50%;
+}
+
+._pdt_select option{
+    background: #000;
+}
+
+._pdtForm input:focus,
+._pdtForm select:focus,
+._pdtForm textarea:focus{
+    outline: 1px solid var(--sub-color);
+}
+
+._pdt_nBox{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 380px;
+    border: 1px solid #333;
+    border-radius: 6px;
+}
+
+._pdt_nBox input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+._pdtForm textarea::-webkit-scrollbar{
+    width: 8px;
+}
+._pdtForm textarea::-webkit-scrollbar-track{
+    background: #333;
+    border-radius: 6px;
+}
+._pdtForm textarea::-webkit-scrollbar-thumb{
+    background: var(--sub-color);
+    border-radius: 6px;
+}
+
+@media (max-width:576px) {
+    ._pdtBox{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    ._pdtItem:hover ._pdtDown{
+        display: block;
+        height: 75%;
+    }
+    ._pdtFormWrap{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    ._pdt_1, ._pdt_2{
+        width: 100%;
+    }
+    ._pdt_select{
+        width: 100%;
+    }
+    ._pdt_nBox{
+        height: 140px;
+    }
+}

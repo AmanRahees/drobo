@@ -1,0 +1,122 @@
+.inline-container{
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    top: 0;
+    right: 20px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.inline-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes inlineBox_ {
+    0%{
+        width: 0%;
+    }
+    50%{
+        width: 200px;
+    }
+    100%{
+        width: 400px;
+    }
+}
+
+.inlineBox-body{
+    position: relative;
+    background: #121212;
+    padding: 12px 18px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    max-width: 80%;
+    color: #fff;
+    z-index: 1001;
+    animation: inlineBox_ 0.3s linear;
+}
+
+.inlineBox-heading{
+    font-size: 22px;
+    pointer-events: none;
+}
+
+.inlineBox-content{
+    padding: 5px 0;
+    width: 400px;
+    height: 70vh;
+    overflow: scroll;
+    font-size: 18px;
+}
+
+.inlineBox-content::-webkit-scrollbar{
+    display: none;
+}
+
+.inlineForm{
+    padding: 0 2px;
+}
+
+.inlineForm input[type="text"]{
+    width: 100%;
+    background: transparent;
+    color: #fff;
+    padding: 8px;
+    border: 1px solid #000;
+    outline: 1px solid #555;
+    border-radius: 6px;
+}
+
+.inlineForm input[type="text"]:focus{
+    outline: 1px solid var(--sub-color);
+}
+
+.inline_ImageBox{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 1px solid #333;
+    border-radius: 6px;
+}
+
+.inline_ImageBox input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+@keyframes _inlineBox_ {
+    0%{
+        height: 0%;
+    }
+    50%{
+        height: 50%;
+    }
+    100%{
+        height: 100%;
+    }
+}
+
+@media (max-width:576px) {
+    .inline-container{
+        justify-content: center;
+        right: 0;
+    }
+    .inlineBox-body{
+        max-width: 100%;
+        animation: _inlineBox_ 0.3s linear;
+    }
+    .inlineBox-content{
+        width: 300px;
+    }
+}

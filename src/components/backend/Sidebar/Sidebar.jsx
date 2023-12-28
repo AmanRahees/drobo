@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link, useLocation} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faBarsStaggered, faBox, faBoxes, faDashboard, faTableCells, faTruckFast, faUserCircle, faUsers} from '@fortawesome/free-solid-svg-icons'
+import {faBarsStaggered, faBox, faBoxes, faDashboard, faGear, faPowerOff, faTableCells, faTruckFast, faUserCircle, faUsers} from '@fortawesome/free-solid-svg-icons'
 import "./sidebar.css"
 
 function Sidebar() {
@@ -18,8 +18,8 @@ function Sidebar() {
         <div className="sidebar-user">
             <FontAwesomeIcon className='sidebar-user-icon border-2 rounded-full border-slate-800' icon={faUserCircle}/>
             <div className="sidebar-details">
-                <h2 className='text-lg text-orange-500'>Aman Rahees</h2>
-                <span className='text-slate-400'>Admin</span>
+                <h2 className='text-lg'>Aman Rahees</h2>
+                <span className='text-gray-600'>Admin</span>
             </div>
         </div>
         <div className="sidebar-Items">
@@ -41,6 +41,12 @@ function Sidebar() {
             <Link to="/admin/orders" className={`sidebar-Item ${location.pathname.includes("/admin/orders") ? "active" : ""}`}>
                 <FontAwesomeIcon icon={faTruckFast}/> <span> &nbsp; Orders</span>
             </Link>
+            <Link to="/admin/orders" className={`sidebar-Item ${location.pathname.includes("/admin/orders") ? "active" : ""}`}>
+                <FontAwesomeIcon icon={faGear}/> <span> &nbsp; Settings</span>
+            </Link>
+            <button className={`sidebar-Item text-left text-red-500 ${location.pathname.includes("/admin/orders") ? "active" : ""}`}>
+                <FontAwesomeIcon icon={faPowerOff}/> <span> &nbsp; Logout</span>
+            </button>
         </div>
     </div>
   )

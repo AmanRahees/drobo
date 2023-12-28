@@ -22,7 +22,7 @@ function AdminLogin() {
                     </div>
                 </div>
                 <div className="mt-4">
-                    <button className='w-full py-2 text-white bg-orange-600 rounded'>Login</button>
+                    <button className='w-full py-2 text-white bg-sub-color rounded'>Login</button>
                     <span className="block text-center text-red-600 mt-2">
                         <FontAwesomeIcon icon={faInfoCircle}/> Authorized Administrators Only!</span>
                 </div>

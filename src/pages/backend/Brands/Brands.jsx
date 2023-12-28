@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faPen, faTrash, faCloudArrowUp} from '@fortawesome/free-solid-svg-icons'
+import {faPen, faTrash, faSearch, faCloudArrowUp} from '@fortawesome/free-solid-svg-icons'
 import Struct from '../../../components/backend/Struct/Struct'
 import iphone from '../../../assets/imgs/iphone15.png'
 import Toast from '../../../components/backend/Toast/Toast'
 import Modal from '../../../components/backend/Modal/Modal'
 import InlineBox from '../../../components/backend/InlineBox/InlineBox'
-import "./category.css"
+import "./brands.css"
 
-function Category() {
+function Brands() {
   const [filter, setFilter] = useState("All");
   const [deleteModal, setDeleteModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
@@ -24,7 +24,7 @@ function Category() {
         setDeleteId(0);
     }
   }
-  const handleCategoryDelete = () =>{
+  const handleBrandDelete = () =>{
     console.log(deleteId);
     setDeleteModal(false);
     setShowDelete(true);
@@ -34,26 +34,31 @@ function Category() {
   }
   return (
     <Struct>
-      <button className='float-right bg-sub-color py-1 px-3 rounded-md'
+        <button className='float-right bg-sub-color py-1 px-3 rounded-md'
         onClick={()=>setAddModal(true)}>Add +</button>
-      <h1 className='text-3xl md:text-4xl text-sub-color'>Category</h1>
+        <h1 className='text-3xl md:text-4xl text-sub-color'>Brands</h1>
 
-      <div className="pl_filter my-4">
-        <button onClick={()=>setFilter("All")} className={`${filter === "All" ? "active" : null}`}>
-          All
-        </button>
-        <button onClick={()=>setFilter("Newest")} className={`${filter === "Newest" ? "active" : null}`}>
-          Newest
-        </button>
-        <button onClick={()=>setFilter("Oldest")} className={`${filter === "Oldest" ? "active" : null}`}>
-          Oldest
-        </button>
-        <button onClick={()=>setFilter("Most Used")} className={`${filter === "Most Used" ? "active" : null}`}>
-          Most Used
-        </button>
-      </div>
+        <div className="pl-searchBox">
+            <input type="text" placeholder='Search...' />
+            <FontAwesomeIcon icon={faSearch} className='pl-searchIcon'/>
+        </div>
 
-      <div className="cbBox">
+        <div className="pl_filter my-4">
+            <button onClick={()=>setFilter("All")} className={`${filter === "All" ? "active" : null}`}>
+            All
+            </button>
+            <button onClick={()=>setFilter("Newest")} className={`${filter === "Newest" ? "active" : null}`}>
+            Newest
+            </button>
+            <button onClick={()=>setFilter("Oldest")} className={`${filter === "Oldest" ? "active" : null}`}>
+            Oldest
+            </button>
+            <button onClick={()=>setFilter("Most Used")} className={`${filter === "Most Used" ? "active" : null}`}>
+            Most Used
+            </button>
+        </div>
+
+        <div className="cbBox">
             <div className="cbItem">
             <img src={iphone} alt="" />
             <div className="cbInfo">
@@ -72,7 +77,7 @@ function Category() {
 
         {addModal &&
         <InlineBox>
-            <h1 className='inlineBox-heading'>Add Category</h1>
+            <h1 className='inlineBox-heading'>Add Brand</h1>
             <div className="modal-divider"></div>
             <p className='inlineBox-content'>
                 <form className="inlineForm">
@@ -99,13 +104,13 @@ function Category() {
             <div className="modal-divider"></div>
             <div className="modal-btns">
                 <button onClick={()=>setAddModal(false)} className='bg-gray-800'>Cancel</button>
-                <button onClick={()=>handleCategoryDelete()} className='bg-red-600'>Yes</button>
+                <button onClick={()=>handleBrandDelete()} className='bg-red-600'>Yes</button>
             </div>
         </InlineBox>}
 
         {editModal &&
         <InlineBox>
-            <h1 className='inlineBox-heading'>Edit Category</h1>
+            <h1 className='inlineBox-heading'>Edit Brand</h1>
             <div className="modal-divider"></div>
             <p className='inlineBox-content'>
                 <form className="inlineForm">
@@ -132,7 +137,7 @@ function Category() {
             <div className="modal-divider"></div>
             <div className="modal-btns">
                 <button onClick={()=>setEditModal(false)} className='bg-gray-800'>Cancel</button>
-                <button onClick={()=>handleCategoryDelete()} className='bg-red-600'>Yes</button>
+                <button onClick={()=>handleBrandDelete()} className='bg-red-600'>Yes</button>
             </div>
         </InlineBox>}
 
@@ -144,15 +149,15 @@ function Category() {
             <div className="modal-divider"></div>
             <div className="modal-btns">
                 <button onClick={()=>handleDeleteModal(0, "close")} className='bg-gray-800'>Cancel</button>
-                <button onClick={()=>handleCategoryDelete()} className='bg-red-600'>Yes</button>
+                <button onClick={()=>handleBrandDelete()} className='bg-red-600'>Yes</button>
             </div>
         </Modal>}
 
         {showDelete &&
         <Toast type={"success"} message={"Brand Deleted Successfully"}/>}
-      
+
     </Struct>
   )
 }
 
-export default Category
+export default Brands

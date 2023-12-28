@@ -18,8 +18,8 @@
     --dark: #000;
     --light: #edf0f3;
     --main-color: #050000;
-    --sub-color: #eb6521;
-    --cube-color: #dbe4e9;
+    --sub-color: #583cfa;
+    --cube-color: #bbbfc1;
 }
 
 *{
@@ -39,4 +39,14 @@ body{
 
 body::-webkit-scrollbar{
     display: none;
+}
+
+.text-sub-color{
+    color: var(--sub-color);
+}
+.bg-sub-color{
+    background: var(--sub-color);
+}
+.bg-backend{
+    background: #121212;
 }

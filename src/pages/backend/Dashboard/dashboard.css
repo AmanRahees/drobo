@@ -5,13 +5,54 @@
     width: 100%;
 }
 
+.go-corner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    background-color: var(--sub-color);
+    border-radius: 0 4px 0 32px;
+}
+
 .pl-card{
+    display: block;
     position: relative;
     background: #121212;
+    color: var(--sub-color);
     width: 25%;
     height: 150px;
-    padding: 20px;
+    padding: 32px 24px;
     border-radius: 6px;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.pl-card::before{
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -16px;
+    right: -16px;
+    background: var(--sub-color);
+    height: 32px;
+    width: 32px;
+    border-radius: 32px;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition: all 0.5s ease-out;
+}
+
+.pl-card:hover{
+    color: #fff;
+}
+
+.pl-card:hover::before{
+    scale: 31;
 }
 
 .cardValue{

@@ -1,14 +1,14 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark, faCircleCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
-import "./toaster.css"
+import "./toast.css"
 
-function Toaster({type, message}) {
+function Toast({type, message}) {
     if (type === "danger"){
         return(
-            <div className="toasterBox bg-red-600">
+            <div className="toastBox bg-red-600">
                 <div className="toast_message">
-                    <FontAwesomeIcon icon={faCircleXmark}/> &nbsp;
+                    <FontAwesomeIcon icon={faCircleXmark}/> &nbsp;&nbsp;
                     {message}
                 </div>
                 <div className="toast_progress"></div>
@@ -17,9 +17,9 @@ function Toaster({type, message}) {
     }
     else if (type === "success"){
         return(
-            <div className="toasterBox bg-green-600">
+            <div className="toastBox bg-green-600">
                 <div className="toast_message">
-                    <FontAwesomeIcon icon={faCircleCheck}/> &nbsp;
+                    <FontAwesomeIcon icon={faCircleCheck}/> &nbsp;&nbsp;
                     {message}
                 </div>
                 <div className="toast_progress"></div>
@@ -28,9 +28,9 @@ function Toaster({type, message}) {
     }
     else if (type === "warning"){
         return(
-            <div className="toasterBox bg-amber-400">
+            <div className="toastBox bg-amber-400">
                 <div className="toast_message">
-                    <FontAwesomeIcon icon={faTriangleExclamation}/> &nbsp;
+                    <FontAwesomeIcon icon={faTriangleExclamation}/> &nbsp;&nbsp;
                     {message}
                 </div>
                 <div className="toast_progress"></div>
@@ -39,4 +39,4 @@ function Toaster({type, message}) {
     }
 }
 
-export default Toaster
+export default Toast;

@@ -2,14 +2,13 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import Struct from '../../../components/backend/Struct/Struct'
-import Toaster from '../../../components/backend/Toaster/Toaster'
+import Toast from '../../../components/backend/Toast/Toast'
 import "./customers.css"
 
 function Customer() {
   return (
     <Struct>
-      <h1 className='text-4xl text-orange-600'>Customers</h1>
-      <span className="block">47* customers</span>
+      <h1 className='text-4xl text-sub-color'>Customers</h1>
       
       <div className="pl-searchBox">
         <input type="text" placeholder='Search...' />
@@ -30,14 +29,14 @@ function Customer() {
           <tr>
             <td>1</td>
             <td>Aman Rahees</td>
-            <td>amanrahees@gmail.com</td>
+            <td className='text-sub-color cursor-pointer'>amanrahees@gmail.com</td>
             <td>-</td>
             <td>
               <input type="checkbox" className="togglerInput" />
             </td>
           </tr>
         </tbody>
-        <Toaster type={"warning"} message={"Good Morning"}/>
+        <Toast type={"warning"} message={"Good Morning"}/>
       </table>
 
     </Struct>

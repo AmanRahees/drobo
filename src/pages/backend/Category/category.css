@@ -1,0 +1,104 @@
+.pl_filter{
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.pl_filter button{
+    background: #121212;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.pl_filter button.active{
+    background: var(--sub-color);
+}
+
+.cbBox{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(22%, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.cbItem{
+    background: white;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    transition: 0.4s ease-out;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.cbItem::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+	height: 100%;
+    background: #101010;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.cbItem:hover::before{
+    opacity: 0.6;
+}
+
+.cbItem img{
+    width: 100%;
+    aspect-ratio: 1;
+    display: block;
+    height: auto;
+    border-radius: 15px;
+}
+
+.cbInfo {
+    position: absolute;
+    bottom: 10px;
+    color: white; 
+    padding: 10px;
+    opacity: 0;
+    transition: 0.5s;
+    width: 100%;
+}
+
+.cbItem:hover .cbInfo{
+    opacity: 1;
+}
+
+.cbInfo h1 {
+    margin: 0;
+    font-size: 24px; 
+}
+
+.cb_trash{
+    background: red;
+    padding: 5px 8px;
+    border-radius: 6px;
+    transition: all 0.1s ease;
+}
+
+.cb_pen{
+    background: #083691;
+    padding: 5px 8px;
+    border-radius: 6px;
+    transition: all 0.1s ease;
+}
+
+.cb_trash:active, .cb_pen:active{
+    scale: 0.9;
+}
+
+@media (max-width:576px) {
+    .pl_filter{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+    }
+    .cbBox{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
