@@ -1,0 +1,70 @@
+._orderFilterBox {
+  position: relative;
+  float: right;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+._orderFilterBox button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #121212;
+  border: 1px solid #333;
+  padding: 8px 18px;
+  border-radius: 6px;
+}
+
+._orderFilterBox button.active {
+  background: var(--sub-color);
+}
+
+._orderFilterOpts {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  z-index: 10;
+  width: auto;
+  transform-origin: top right;
+  background: #121212;
+  border: 1px solid #333;
+}
+
+._orderFilterOpts span {
+  display: block;
+  padding: 10px 20px;
+  text-wrap: nowrap;
+  cursor: pointer;
+}
+
+._orderFilterOpts span.active {
+  background: var(--sub-color);
+}
+
+.OrderCheck_ {
+  appearance: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 1px solid #555;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.OrderCheck_:checked {
+  background: var(--sub-color);
+}
+
+.OrderCheck_:checked::after {
+  content: "\2714";
+  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}

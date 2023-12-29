@@ -19,11 +19,18 @@
     border-radius: 0 4px 0 32px;
 }
 
+.go-arrow {
+  margin-top: -4px;
+  margin-right: -4px;
+  color: white;
+  font-family: courier, sans;
+}
+
 .pl-card{
     display: block;
     position: relative;
     background: #121212;
-    color: var(--sub-color);
+    color: #fff;
     width: 25%;
     height: 150px;
     padding: 32px 24px;

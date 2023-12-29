@@ -6,11 +6,31 @@
     font-family: "Roboto";
     src: url("./assets/fonts/Roboto-Regular.ttf");
 }
-
 @font-face {
     font-family: "Roboto Bold";
     src: url("./assets/fonts/Roboto-Bold.ttf");
 }
+
+@font-face {
+    font-family: "Poppins";
+    src: url("./assets/fonts/Poppins-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Poppins Bold";
+    src: url("./assets/fonts/Poppins-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Lato";
+    src: url("./assets/fonts/Lato-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Lato Bold";
+    src: url("./assets/fonts/Lato-Bold.ttf");
+}
+
 
 :root{
     --primary-color: #1f282d;
@@ -25,11 +45,11 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: "Roboto";
+    font-family: "Poppins";
 }
 
 h1, h2, h3, h4, h5, h6{
-    font-family: "Roboto Bold";
+    font-family: "Poppins Bold";
 }
 
 body{

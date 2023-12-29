@@ -41,10 +41,10 @@ function Sidebar() {
             <Link to="/admin/orders" className={`sidebar-Item ${location.pathname.includes("/admin/orders") ? "active" : ""}`}>
                 <FontAwesomeIcon icon={faTruckFast}/> <span> &nbsp; Orders</span>
             </Link>
-            <Link to="/admin/orders" className={`sidebar-Item ${location.pathname.includes("/admin/orders") ? "active" : ""}`}>
+            <Link to="/admin/settings" className={`sidebar-Item ${location.pathname.includes("/admin/settings") ? "active" : ""}`}>
                 <FontAwesomeIcon icon={faGear}/> <span> &nbsp; Settings</span>
             </Link>
-            <button className={`sidebar-Item text-left text-red-500 ${location.pathname.includes("/admin/orders") ? "active" : ""}`}>
+            <button className={`sidebar-Item text-left text-red-500`}>
                 <FontAwesomeIcon icon={faPowerOff}/> <span> &nbsp; Logout</span>
             </button>
         </div>

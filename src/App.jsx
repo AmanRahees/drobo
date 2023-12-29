@@ -7,6 +7,7 @@ import AdminLogin from './pages/backend/Login/Login';
 import Brands from './pages/backend/Brands/Brands';
 import Products from './pages/backend/Products/Products';
 import AddProduct from './pages/backend/Products/AddProduct';
+import Orders from './pages/backend/Orders/Orders';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/admin/brands' element={<Brands/>}/>
         <Route path='/admin/products' element={<Products/>}/>
         <Route path='/admin/products/add' element={<AddProduct/>}/>
+        <Route path='/admin/orders' element={<Orders/>}/>
         <Route path='/admin/login' element={<AdminLogin/>}/>
       </Routes>
     </Router>
