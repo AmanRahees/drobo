@@ -1,0 +1,12 @@
+.__body__ {
+  background: #0000001f;
+  padding: 10px;
+  padding-top: 90px;
+  min-height: 100vh;
+}
+
+@media (max-width: 576px) {
+  .__body__ {
+    padding-top: 140px;
+  }
+}

@@ -1,0 +1,101 @@
+._banner_carousal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousal_items img {
+  width: 100%;
+  aspect-ratio: 4/1;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.carousal_items img.inactive {
+  display: none;
+}
+
+.carousal_items img.active {
+  animation-name: bannerFade;
+  animation-duration: 1.5s;
+}
+
+@keyframes bannerFade {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+._banner_contols button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  border: none;
+  background: #fff;
+  color: #000;
+  box-shadow: 1px 1px 2px #00000033;
+  padding: 32px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.bnr_next_ {
+  left: 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.bnr_prev_ {
+  right: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.carousal_indicator {
+  position: absolute;
+  display: flex;
+  align-self: center;
+  gap: 10px;
+  margin: 16px 0;
+  bottom: 0;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.bnr_dot {
+  width: 15px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.bnr_dot.active {
+  background: rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 996px) {
+  ._banner_contols button {
+    padding: 14px 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousal_items img {
+    aspect-ratio: 3/1;
+  }
+  ._banner_contols button {
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+  .bnr_dot {
+    width: 10px;
+    height: 10px;
+  }
+}
