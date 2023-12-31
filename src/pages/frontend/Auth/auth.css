@@ -1,0 +1,34 @@
+.authBox_ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.authFormBox {
+  position: relative;
+  background: #fff;
+  padding: 30px;
+}
+
+.authFormBox h1 {
+  font-size: 38px;
+  text-align: center;
+}
+
+.authFormBox input {
+  width: 300px;
+  color: var(--primary-color);
+  border: 1px solid var(--secondary-color);
+  outline: none;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.authFormBox input[type="password"] {
+  padding-right: 40px;
+}
+
+.authFormBox input:focus {
+  outline: 1px solid #22222227;
+}

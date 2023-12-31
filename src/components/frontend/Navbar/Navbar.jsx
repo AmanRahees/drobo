@@ -52,16 +52,22 @@ function Navbar() {
             </form>
           </div>
           <button className="nav-userBox">
-            <div className="flex justify-center items-center gap-2">
+            <Link
+              to="/login"
+              className="flex justify-center items-center gap-2"
+            >
               <FontAwesomeIcon
                 className="text-2xl nav-user_"
                 icon={faCircleUser}
               />
               Login
               <FontAwesomeIcon className="nav-angle_" icon={faAngleDown} />
-            </div>
+            </Link>
             <div className="nav-userOpts_ absolute left-0 z-10 mt-3 w-56 origin-top-right rounded-md shadow-lg">
-              <Link className="text-gray-700 block px-6 py-3 text-sm">
+              <Link
+                to="/signup"
+                className="text-gray-700 block px-6 py-3 text-sm"
+              >
                 New Customer
                 <span className="block float-right text-green-800 font-bold">
                   SignUp

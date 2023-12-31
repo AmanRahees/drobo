@@ -68,6 +68,12 @@ body::-webkit-scrollbar {
 .bg-primary-color {
   background: var(--primary-color);
 }
+.text-primary-color {
+  color: var(--primary-color);
+}
+.bg-secondary-color {
+  background: var(--secondary-color);
+}
 .text-sub-color {
   color: var(--sub-color);
 }

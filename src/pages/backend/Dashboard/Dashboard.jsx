@@ -21,8 +21,8 @@ function Dashboard() {
             />
           </h1>
           <p className="cardValue">$282374</p>
-          <div class="go-corner">
-            <div class="go-arrow">→</div>
+          <div className="go-corner">
+            <div className="go-arrow">→</div>
           </div>
         </Link>
         <Link className="pl-card">
@@ -34,8 +34,8 @@ function Dashboard() {
             />
           </h1>
           <p className="cardValue">$282374</p>
-          <div class="go-corner">
-            <div class="go-arrow">→</div>
+          <div className="go-corner">
+            <div className="go-arrow">→</div>
           </div>
         </Link>
         <Link className="pl-card">
@@ -47,8 +47,8 @@ function Dashboard() {
             />
           </h1>
           <p className="cardValue">$282374</p>
-          <div class="go-corner">
-            <div class="go-arrow">→</div>
+          <div className="go-corner">
+            <div className="go-arrow">→</div>
           </div>
         </Link>
         <Link className="pl-card">
@@ -60,8 +60,8 @@ function Dashboard() {
             />
           </h1>
           <p className="cardValue">$282374</p>
-          <div class="go-corner">
-            <div class="go-arrow">→</div>
+          <div className="go-corner">
+            <div className="go-arrow">→</div>
           </div>
         </Link>
       </div>

@@ -29,9 +29,8 @@ const Carousal = ({ banners }) => {
     <div className="_banner_carousal">
       <div className="carousal_items">
         {banners.map((banner, index) => (
-          <Link>
+          <Link key={index}>
             <img
-              key={index}
               src={banner}
               className={currentIndex === index ? "active" : "inactive"}
               alt={banner}
