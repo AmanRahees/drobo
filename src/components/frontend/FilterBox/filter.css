@@ -1,0 +1,66 @@
+._top_filterBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 20px;
+}
+
+._aBox_filterBox {
+  padding: 20px;
+  border-bottom: 1px solid #1111112a;
+}
+
+.angleBtn_,
+.brndAngleBtn_,
+.ctgyAngleBtn_ {
+  transition: all 0.3s ease;
+}
+
+.angleBtn_.active,
+.brndAngleBtn_.active,
+.ctgyAngleBtn_.active {
+  transform: rotate(-180deg);
+}
+
+._content_filterBox,
+._ctgy_filters,
+._brnd_filters {
+  height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+._content_filterBox.active {
+  height: 100%;
+  animation: _filterDropIn 0.5s linear;
+}
+
+._ctgy_filters.active,
+._brnd_filters.active {
+  height: 100%;
+  animation: _filterDropIn 0.5s linear;
+}
+
+@keyframes _filterDropIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+._evyH_filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--primary-color);
+}
+
+@media (max-width: 996px) {
+}
+
+@media (max-width: 576px) {
+}

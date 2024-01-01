@@ -36,9 +36,9 @@ function Navbar() {
     <>
       <div className="Navbar_lg">
         <div className="nav-container">
-          <div className="nav-logo" title="drobo">
+          <Link to="/" className="nav-logo" title="drobo">
             <h1>drobo.</h1>
-          </div>
+          </Link>
           <div className="nav-search">
             <form className="flex">
               <button className="rounded-tl-md rounded-bl-md">

@@ -11,12 +11,14 @@ import AddProduct from "./pages/backend/Products/AddProduct";
 import Orders from "./pages/backend/Orders/Orders";
 import SignUp from "./pages/frontend/Auth/SignUp";
 import ProuductPage from "./pages/frontend/Shop/ProuductPage";
+import Shop from "./pages/frontend/Shop/Shop";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="/:name" element={<ProuductPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

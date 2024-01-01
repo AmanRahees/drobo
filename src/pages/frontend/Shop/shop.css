@@ -1,81 +1,29 @@
-._pdt_viewBox {
+._shop-container {
   display: flex;
+  align-items: flex-start;
+  gap: 30px;
   width: 100%;
-  padding: 30px;
+  padding: 20px;
+  background: #fff;
 }
 
-._pdt_imgBlock {
-  width: 50%;
+._shop-filterBox {
+  width: 25%;
+  border: 1px solid #1111112a;
+  box-shadow: 2px 2px 8px #11111157;
 }
 
-._pdt_detail {
-  width: 50%;
-  color: var(--primary-color);
-}
-
-._detailName {
-  font-size: 24px;
-}
-
-._detailPrice {
-  font-size: 32px;
-}
-
-._pdt_detail .description_ {
-  margin: 10px 0;
-  text-indent: 40px;
-  line-height: 30px;
-}
-
-._var_color {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-._var_color button {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #b5b2b2;
-  border-radius: 100%;
-  box-shadow: 1px 1px 2px #1111113c;
-}
-
-._var_color button.active {
-  scale: 1.2;
-  border: 2px solid var(--secondary-color);
-}
-
-._var_memory {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-._var_memory button {
-  font-size: 12px;
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  box-shadow: 1px 1px 2px #1111113c;
-  border-radius: 6px;
-}
-
-._var_memory button.active {
-  background: var(--primary-color);
-  color: #fff;
+@media (max-width: 996px) {
+  ._shop-filterBox {
+    width: 30%;
+  }
 }
 
 @media (max-width: 576px) {
-  ._pdt_viewBox {
-    display: block;
+  ._shop-container {
+    flex-direction: column;
   }
-  ._pdt_imgBlock {
+  ._shop-filterBox {
     width: 100%;
-  }
-  ._pdt_detail {
-    width: 100%;
-    margin: 20px 0;
   }
 }
