@@ -13,9 +13,33 @@
   box-shadow: 2px 2px 8px #11111157;
 }
 
+._shop-ItemList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(23%, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+._shop-Item {
+  position: relative;
+  box-shadow: 1px 1px 6px #11111157;
+  cursor: pointer;
+}
+
+._shop-Item img {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
 @media (max-width: 996px) {
+  ._shop-container {
+    flex-direction: column;
+  }
   ._shop-filterBox {
-    width: 30%;
+    width: 100%;
+  }
+  ._shop-ItemList {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -25,5 +49,9 @@
   }
   ._shop-filterBox {
     width: 100%;
+  }
+  ._shop-ItemList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 }

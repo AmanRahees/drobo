@@ -6,8 +6,8 @@ import img1 from "../../../assets/imgs/banner.jpg";
 
 function Home() {
   const banners = [
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS95LYR1YwzavMkK8ZjwDwauhW7vUMU_FFsWg&usqp=CAU",
     "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/3d1164a45e52e42e.jpg?q=20",
-    "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/830b0b3bff28e292.jpg?q=20",
     img1,
     "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/830b0b3bff28e292.jpg?q=20",
   ];
