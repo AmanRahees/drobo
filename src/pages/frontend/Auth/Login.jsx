@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -9,7 +10,22 @@ import {
 import "./auth.css";
 
 function Login() {
+  const { UserLogin, error } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputchange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    await UserLogin(formData.email, formData.password);
+  };
+
   return (
     <div className="authBox_">
       <div className="absolute h-full -z-20 w-full bg-secondary-color">
@@ -20,8 +36,7 @@ function Login() {
         >
           <path
             d="M 0 50 C 150 150 300 0 500 80 L 500 0 L 0 0"
-            fillRule="#1f282d"
-            clipRule="evenodd"
+            fill="#1f282d"
           ></path>
         </svg>
       </div>
@@ -35,10 +50,16 @@ function Login() {
           </Link>
           Login
         </h1>
-        <form action="">
+        <form onSubmit={handleFormSubmit}>
+          <span className="block text-center text-red-500">{error}</span>
           <div className="relative mb-3">
             <label className="block mb-1 text-gray-700">Email</label>
-            <input type="text" />
+            <input
+              type="email"
+              name="email"
+              onChange={handleInputchange}
+              value={formData.email}
+            />
           </div>
           <div className="relative mb-3">
             <div className="flex justify-between items-center mb-1">
@@ -49,6 +70,8 @@ function Login() {
               <input
                 type={`${showPassword ? "text " : "password"}`}
                 name="password"
+                onChange={handleInputchange}
+                value={formData.password}
               />
               <button
                 className="absolute text-gray-700 top-1/2 right-2 -translate-y-1/2"

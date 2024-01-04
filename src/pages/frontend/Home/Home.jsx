@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Struct from "../../../components/frontend/Struct/Struct";
 import Carousal from "../../../components/frontend/BannerCarousal/Carousal";
 import ProductSlider from "../../../components/frontend/ProductSlider/ProductSlider";
 import img1 from "../../../assets/imgs/banner.jpg";
+// import axiosInstance from "../../../services/axios";
+import useAxios from "../../../services/useAxios";
 
 function Home() {
+  let api = useAxios();
   const banners = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS95LYR1YwzavMkK8ZjwDwauhW7vUMU_FFsWg&usqp=CAU",
     "https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/3d1164a45e52e42e.jpg?q=20",
@@ -19,6 +22,12 @@ function Home() {
     "https://lh3.googleusercontent.com/Z_hNxWoSZ6J46N31m7A_KvHdvFHI9sFd1_ajACvM8eSSON9Vwb8Sz0T6ubX6MSB3QUz6ThgqjZo5qRdLJdhSaLzvn-u6yivWPmo=rw-e365-w3000",
     "https://lh3.googleusercontent.com/Z_hNxWoSZ6J46N31m7A_KvHdvFHI9sFd1_ajACvM8eSSON9Vwb8Sz0T6ubX6MSB3QUz6ThgqjZo5qRdLJdhSaLzvn-u6yivWPmo=rw-e365-w3000",
   ];
+  useEffect(() => {
+    api
+      .get("admin/category")
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
+  }, [api]);
   return (
     <Struct>
       <Carousal banners={banners} />

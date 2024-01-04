@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../../../contexts/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import axiosInstance from "../../../services/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -9,7 +12,43 @@ import {
 import "./auth.css";
 
 function SignUp() {
+  const navigate = useNavigate();
+  const { setAuthTokens, setUserData } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const handleInputchange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    axiosInstance
+      .post("accounts/register", {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      })
+      .then((response) => {
+        if (response.status === 201) {
+          let data = response.data;
+          setAuthTokens(data);
+          setUserData(jwtDecode(data.access));
+          localStorage.setItem("authTokens", JSON.stringify(data));
+          navigate("/");
+        } else {
+          setError(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="authBox_">
       <div className="absolute h-full -z-20 w-full bg-secondary-color">
@@ -34,14 +73,25 @@ function SignUp() {
           </Link>
           SignUp
         </h1>
-        <form action="">
+        <form onSubmit={handleFormSubmit}>
+          <span className="block text-center text-red-500">{error}</span>
           <div className="relative mb-3">
             <label className="block mb-1 text-gray-700">Full Name</label>
-            <input type="text" />
+            <input
+              type="text"
+              name="username"
+              onChange={handleInputchange}
+              value={formData.username}
+            />
           </div>
           <div className="relative mb-3">
             <label className="block mb-1 text-gray-700">Email</label>
-            <input type="text" />
+            <input
+              type="text"
+              name="email"
+              onChange={handleInputchange}
+              value={formData.email}
+            />
           </div>
           <div className="relative mb-3">
             <label className="block mb-1 text-gray-700">Password</label>
@@ -49,6 +99,8 @@ function SignUp() {
               <input
                 type={`${showPassword ? "text " : "password"}`}
                 name="password"
+                onChange={handleInputchange}
+                value={formData.password}
               />
               <button
                 className="absolute text-gray-700 top-1/2 right-2 -translate-y-1/2"

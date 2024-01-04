@@ -4,11 +4,13 @@ import {
   faPen,
   faTrash,
   faCloudArrowUp,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import Struct from "../../../components/backend/Struct/Struct";
 import iphone from "../../../assets/imgs/iphone15.png";
 import Modal from "../../../components/backend/Modal/Modal";
 import InlineBox from "../../../components/backend/InlineBox/InlineBox";
+import AddCategory from "./AddCategory";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./category.css";
@@ -42,6 +44,11 @@ function Category() {
         Add +
       </button>
       <h1 className="text-3xl md:text-4xl text-sub-color">Category</h1>
+
+      <div className="pl-searchBox">
+        <input type="text" placeholder="Search..." />
+        <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
+      </div>
 
       <div className="pl_filter my-4">
         <button
@@ -91,49 +98,10 @@ function Category() {
       </div>
 
       {addModal && (
-        <InlineBox>
-          <h1 className="inlineBox-heading">Add Category</h1>
-          <div className="modal-divider"></div>
-          <p className="inlineBox-content">
-            <form className="inlineForm">
-              <div className="relative mb-3">
-                <label className="block mb-2">Category Name</label>
-                <input type="text" />
-              </div>
-              <div className="relative mb-3">
-                <label className="block mb-2">Category Image</label>
-                <div className="inline_ImageBox">
-                  <input type="file" />
-                  <div className="flex justify-center flex-col gap-3">
-                    <FontAwesomeIcon
-                      className="text-4xl md:text-5xl"
-                      icon={faCloudArrowUp}
-                    />
-                    <span className="text-xs md:text-sm block">
-                      Choose a file or Drag it here
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="relative flex items-center gap-3 mb-3">
-                <label>Status :</label>
-                <input type="checkbox" className="togglerInput" />
-              </div>
-            </form>
-          </p>
-          <div className="modal-divider"></div>
-          <div className="modal-btns">
-            <button onClick={() => setAddModal(false)} className="bg-gray-800">
-              Cancel
-            </button>
-            <button
-              onClick={() => handleCategoryDelete()}
-              className="bg-red-600"
-            >
-              Yes
-            </button>
-          </div>
-        </InlineBox>
+        <AddCategory
+          setAddModal={setAddModal}
+          handleCategoryDelete={handleCategoryDelete}
+        />
       )}
 
       {editModal && (
