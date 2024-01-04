@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Struct from "../../../components/backend/Struct/Struct";
+import useAxios from "../../../services/useAxios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./customers.css";
 
 function Customer() {
+  const api = useAxios();
+  const [usersData, setUsersData] = useState([]);
+  useEffect(() => {
+    api
+      .get("admin/customers")
+      .then((response) => {
+        setUsersData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  const handleStatusChange = (id) => {
+    api
+      .put(`admin/customers/${id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("Updated Successfull");
+          const updatedData = usersData.map((item) =>
+            item.id === id ? { ...item, is_active: !item.is_active } : item
+          );
+          setUsersData(updatedData);
+        }
+      })
+      .catch((error) => {
+        toast.error("Something went Wrong!");
+      });
+  };
   return (
     <Struct>
       <h1 className="text-4xl text-sub-color">Customers</h1>
@@ -20,24 +51,33 @@ function Customer() {
             <th>Id</th>
             <th>Username</th>
             <th>Email</th>
-            <th>Phone</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Aman Rahees</td>
-            <td className="text-sub-color cursor-pointer">
-              amanrahees@gmail.com
-            </td>
-            <td>-</td>
-            <td>
-              <input type="checkbox" className="togglerInput" />
-            </td>
-          </tr>
+          {usersData.map((user, index) => (
+            <tr key={index}>
+              <td>{user.id}</td>
+              <td>{user.username}</td>
+              <td className="text-sub-color cursor-pointer">{user.email}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={user.is_active}
+                  onChange={() => handleStatusChange(user.id)}
+                  className="togglerInput"
+                />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        pauseOnHover={false}
+        theme="dark"
+      />
     </Struct>
   );
 }

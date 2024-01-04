@@ -1,39 +1,52 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowUp, faClose } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
+import { apiUrl } from "../../../services/constants";
 import InlineBox from "../../../components/backend/InlineBox/InlineBox";
 
-function AddCategory({ setAddModal, hanldeToastMessages, setCategoryData }) {
+function EditCategory({
+  selectedId,
+  setEditModal,
+  setCategoryData,
+  categoryData,
+  hanldeToastMessages,
+}) {
   const api = useAxios();
+  const selectedValues = categoryData.find(
+    (category) => category.id === selectedId
+  );
   const [formData, setFormData] = useState({
-    category_name: "",
-    category_image: null,
-    category_offer: 0,
-    status: true,
+    category_name: selectedValues.category_name,
+    category_image: selectedValues.category_image,
+    status: selectedValues.status,
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-  const HandleAddCategory = async () => {
-    await api
-      .post("admin/category", formData, {
+  const handleEditCategory = () => {
+    api
+      .put(`admin/category/${selectedId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
-        if (response.status === 201) {
-          setCategoryData((prevCategory) => [...prevCategory, response.data]);
-          hanldeToastMessages("success", "Category Added Successfully!");
-          setAddModal(false);
-        } else {
-          hanldeToastMessages("error", "Something went Wrong!");
+        if (response.status === 200) {
+          console.log(response.data);
+          const updateTheData = categoryData.map((item) =>
+            item.id === selectedId ? { ...item, ...response.data } : item
+          );
+          console.log(updateTheData);
+          setCategoryData(updateTheData);
+          setEditModal(false);
+          hanldeToastMessages("success", "Updated Successfully!");
         }
       })
       .catch((error) => {
-        hanldeToastMessages("error", "Something went Wrong!");
+        console.log(error);
+        hanldeToastMessages("error", "Something went wrong!");
       });
   };
   const handleImageChange = (e) => {
@@ -49,7 +62,7 @@ function AddCategory({ setAddModal, hanldeToastMessages, setCategoryData }) {
       <h1 className="inlineBox-heading">Add Category</h1>
       <div className="modal-divider"></div>
       <div className="inlineBox-content">
-        <form className="inlineForm">
+        <div className="inlineForm">
           <div className="relative mb-3">
             <label className="block mb-2">Category Name</label>
             <input
@@ -94,7 +107,11 @@ function AddCategory({ setAddModal, hanldeToastMessages, setCategoryData }) {
                   <FontAwesomeIcon icon={faClose} />
                 </button>
                 <img
-                  src={URL.createObjectURL(formData.category_image)}
+                  src={
+                    typeof formData.category_image === "string"
+                      ? `${apiUrl}${formData.category_image}`
+                      : URL.createObjectURL(formData.category_image)
+                  }
                   alt={formData.category_image.name}
                 />
               </div>
@@ -110,20 +127,20 @@ function AddCategory({ setAddModal, hanldeToastMessages, setCategoryData }) {
               className="togglerInput"
             />
           </div>
-        </form>
+        </div>
       </div>
       <div className="modal-divider"></div>
       <div className="modal-btns">
         <button
           type="button"
-          onClick={() => setAddModal(false)}
+          onClick={() => setEditModal(false)}
           className="bg-gray-800"
         >
           Cancel
         </button>
         <button
           type="button"
-          onClick={() => HandleAddCategory()}
+          onClick={() => handleEditCategory()}
           className="bg-red-600"
         >
           Yes
@@ -133,4 +150,4 @@ function AddCategory({ setAddModal, hanldeToastMessages, setCategoryData }) {
   );
 }
 
-export default AddCategory;
+export default EditCategory;

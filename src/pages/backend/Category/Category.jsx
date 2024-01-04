@@ -1,39 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPen,
-  faTrash,
-  faCloudArrowUp,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash, faSearch } from "@fortawesome/free-solid-svg-icons";
+import useAxios from "../../../services/useAxios";
+import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/backend/Struct/Struct";
-import iphone from "../../../assets/imgs/iphone15.png";
-import Modal from "../../../components/backend/Modal/Modal";
-import InlineBox from "../../../components/backend/InlineBox/InlineBox";
 import AddCategory from "./AddCategory";
+import EditCategory from "./EditCategory";
+import DeleteCategory from "./DeleteCategory";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./category.css";
 
 function Category() {
+  const api = useAxios();
   const [filter, setFilter] = useState("All");
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [categoryData, setCategoryData] = useState([]);
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(0);
-  const handleDeleteModal = (id, action) => {
-    if (action === "open") {
-      setDeleteModal(!deleteModal);
-      setDeleteId(id);
-    } else {
-      setDeleteModal(!deleteModal);
-      setDeleteId(0);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
+  useEffect(() => {
+    api.get("admin/category").then((response) => {
+      if (response.status === 200) {
+        setCategoryData(response.data);
+      }
+    });
+  }, []);
+  const hanldeToastMessages = (type, message) => {
+    if (type === "success") {
+      toast.success(message);
+    } else if (type === "error") {
+      toast.error(message);
     }
   };
-  const handleCategoryDelete = () => {
-    console.log(deleteId);
-    setDeleteModal(false);
-    toast.error("Invalid Password!");
+  const handleTrashSelect = (id) => {
+    setSelectedId(id);
+    setDeleteModal(true);
+  };
+  const handleEditSelect = (id) => {
+    setSelectedId(id);
+    setEditModal(true);
   };
   return (
     <Struct>
@@ -70,110 +76,66 @@ function Category() {
           Oldest
         </button>
         <button
-          onClick={() => setFilter("Most Used")}
-          className={`${filter === "Most Used" ? "active" : null}`}
+          onClick={() => setFilter("Disabled")}
+          className={`${filter === "Disabled" ? "active" : null}`}
         >
-          Most Used
+          Disabled
         </button>
       </div>
 
       <div className="cbBox">
-        <div className="cbItem">
-          <img src={iphone} alt="" />
-          <div className="cbInfo">
-            <div className="float-right flex items-center gap-2">
-              <button className="cb_pen" onClick={() => setEditModal(true)}>
-                <FontAwesomeIcon icon={faPen} />
-              </button>
-              <button
-                className="cb_trash"
-                onClick={() => handleDeleteModal(1, "open")}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
+        {categoryData.map((item, index) => (
+          <div key={index} className="cbItem">
+            <img src={`${apiUrl}${item.category_image}`} alt="" />
+            <div className="cbInfo">
+              <div className="float-right flex items-center gap-2">
+                <button
+                  className="cb_pen"
+                  onClick={() => handleEditSelect(item.id)}
+                >
+                  <FontAwesomeIcon icon={faPen} />
+                </button>
+                <button
+                  className="cb_trash"
+                  onClick={() => handleTrashSelect(item.id)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
+              <h1>{item.category_name}</h1>
             </div>
-            <h1>Mobile</h1>
           </div>
-        </div>
+        ))}
       </div>
 
       {addModal && (
         <AddCategory
           setAddModal={setAddModal}
-          handleCategoryDelete={handleCategoryDelete}
+          hanldeToastMessages={hanldeToastMessages}
+          setCategoryData={setCategoryData}
         />
       )}
 
       {editModal && (
-        <InlineBox>
-          <h1 className="inlineBox-heading">Edit Category</h1>
-          <div className="modal-divider"></div>
-          <p className="inlineBox-content">
-            <form className="inlineForm">
-              <div className="relative mb-3">
-                <label className="block mb-2">Category Name</label>
-                <input type="text" />
-              </div>
-              <div className="relative mb-3">
-                <label className="block mb-2">Category Image</label>
-                <div className="inline_ImageBox">
-                  <input type="file" />
-                  <div className="flex justify-center flex-col gap-3">
-                    <FontAwesomeIcon
-                      className="text-4xl md:text-5xl"
-                      icon={faCloudArrowUp}
-                    />
-                    <span className="text-xs md:text-sm block">
-                      Choose a file or Drag it here
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="relative flex items-center gap-3 mb-3">
-                <label>Status :</label>
-                <input type="checkbox" className="togglerInput" />
-              </div>
-            </form>
-          </p>
-          <div className="modal-divider"></div>
-          <div className="modal-btns">
-            <button onClick={() => setEditModal(false)} className="bg-gray-800">
-              Cancel
-            </button>
-            <button
-              onClick={() => handleCategoryDelete()}
-              className="bg-red-600"
-            >
-              Yes
-            </button>
-          </div>
-        </InlineBox>
+        <EditCategory
+          selectedId={selectedId}
+          setEditModal={setEditModal}
+          categoryData={categoryData}
+          setCategoryData={setCategoryData}
+          hanldeToastMessages={hanldeToastMessages}
+        />
       )}
 
       {deleteModal && (
-        <Modal>
-          <h1 className="modal-heading">Modal Heading</h1>
-          <div className="modal-divider"></div>
-          <p className="modal-content">Are you that you want to delete this?</p>
-          <div className="modal-divider"></div>
-          <div className="modal-btns">
-            <button
-              onClick={() => handleDeleteModal(0, "close")}
-              className="bg-gray-800"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={() => handleCategoryDelete()}
-              className="bg-red-600"
-            >
-              Yes
-            </button>
-          </div>
-        </Modal>
+        <DeleteCategory
+          selectedId={selectedId}
+          setDeleteModal={setDeleteModal}
+          hanldeToastMessages={hanldeToastMessages}
+          setCategoryData={setCategoryData}
+        />
       )}
       <ToastContainer
-        position="top-center"
+        position="top-right"
         autoClose={3000}
         pauseOnHover={false}
         theme="dark"
