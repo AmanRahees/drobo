@@ -19,6 +19,7 @@ function Customer() {
       .catch((error) => {
         console.log(error);
       });
+    // eslint-disable-next-line
   }, []);
   const handleStatusChange = (id) => {
     api

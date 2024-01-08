@@ -1,7 +1,11 @@
 .Navbar_lg {
   position: fixed;
-  display: grid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
+  height: 80px;
   background: var(--primary-color);
   z-index: 100;
 }
@@ -12,10 +16,9 @@
 
 .nav-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 30px;
-  padding: 5px 20px;
 }
 
 .nav-logo {
@@ -34,14 +37,13 @@
 
 .nav-search button {
   padding: 10px;
-  color: #fff;
-  /* background: var(--secondary-color); */
+  background: #fff;
+  color: #555;
 }
 
 .nav-search input {
   outline: none;
   width: 600px;
-  color: #555;
   padding: 10px;
 }
 
@@ -52,15 +54,16 @@
   border-radius: 6px;
   padding: 8px 12px;
   transition: all 0.1s ease;
-  cursor: pointer;
 }
 
-.nav-userBox:hover {
-  color: var(--primary-color);
+.nav-userBox:hover,
+.nav-userBox:focus {
+  color: #000;
   background: #fff;
 }
 
-.nav-userBox:hover .nav-user_ {
+.nav-userBox:hover .nav-user_,
+.nav-userBox:focus .nav-user_ {
   color: var(--primary-color);
 }
 
@@ -68,7 +71,8 @@
   transition: all 0.5s ease;
 }
 
-.nav-userBox:hover .nav-angle_ {
+.nav-userBox:hover .nav-angle_,
+.nav-userBox:focus .nav-angle_ {
   transform: rotate(-180deg);
 }
 
@@ -79,7 +83,8 @@
   border: 1px solid #d6d1d1;
 }
 
-.nav-userBox:hover .nav-userOpts_ {
+.nav-userBox:hover .nav-userOpts_,
+.nav-userBox:focus .nav-userOpts_ {
   display: block;
 }
 
@@ -105,7 +110,8 @@
   width: 16px;
   height: 16px;
   border-radius: 100%;
-  color: #fff;
+  background: #d0dbd3;
+  color: var(--primary-color);
   font-size: 12px;
 }
 

@@ -91,11 +91,15 @@
     aspect-ratio: 3/1;
   }
   ._banner_contols button {
-    padding: 10px 8px;
-    font-size: 14px;
+    padding: 8px 5px;
+    font-size: 10px;
+  }
+  .carousal_indicator {
+    gap: 6px;
+    bottom: -6px;
   }
   .bnr_dot {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
   }
 }

@@ -2,22 +2,22 @@ import React from "react";
 import Modal from "../../../components/backend/Modal/Modal";
 import useAxios from "../../../services/useAxios";
 
-function DeleteCategory({
+function DeleteBrands({
   selectedId,
   setDeleteModal,
   hanldeToastMessages,
-  setCategoryData,
+  setBrandsData,
 }) {
   const api = useAxios();
-  const handleDeleteCategory = () => {
+  const handleDeleteBrand = () => {
     api
-      .delete(`admin/category/${selectedId}`)
+      .delete(`admin/brand/${selectedId}`)
       .then((response) => {
         if (response.status === 200) {
-          setCategoryData((prevCategory) =>
-            prevCategory.filter((category) => category.id !== selectedId)
+          setBrandsData((prevBrands) =>
+            prevBrands.filter((brand) => brand.id !== selectedId)
           );
-          hanldeToastMessages("success", "Category Deleted!");
+          hanldeToastMessages("success", "Brand Deleted!");
         }
       })
       .catch((error) => {
@@ -27,7 +27,7 @@ function DeleteCategory({
   };
   return (
     <Modal>
-      <h1 className="modal-heading">Modal Heading</h1>
+      <h1 className="modal-heading">Delete Brand</h1>
       <div className="modal-divider"></div>
       <p className="modal-content">Are you that you want to delete this?</p>
       <div className="modal-divider"></div>
@@ -35,7 +35,7 @@ function DeleteCategory({
         <button onClick={() => setDeleteModal(false)} className="bg-gray-800">
           Cancel
         </button>
-        <button onClick={() => handleDeleteCategory()} className="bg-red-600">
+        <button onClick={() => handleDeleteBrand()} className="bg-red-600">
           Yes
         </button>
       </div>
@@ -43,4 +43,4 @@ function DeleteCategory({
   );
 }
 
-export default DeleteCategory;
+export default DeleteBrands;

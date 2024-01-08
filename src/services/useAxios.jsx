@@ -6,7 +6,8 @@ import { apiUrl } from "./constants";
 import dayjs from "dayjs";
 
 function useAxios() {
-  const { authTokens, setUserData, setAuthTokens } = useContext(AuthContext);
+  const { authTokens, setUserData, setAuthTokens, Logout } =
+    useContext(AuthContext);
 
   const axiosInstance = axios.create({
     baseURL: "http://127.0.0.1:8000/api/",
@@ -18,9 +19,13 @@ function useAxios() {
     const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
     if (!isExpired) return req;
 
-    const response = await axios.post(`${apiUrl}/api/accounts/token/refresh`, {
-      refresh: authTokens.refresh,
-    });
+    const response = await axios
+      .post(`${apiUrl}/api/accounts/token/refresh`, {
+        refresh: authTokens.refresh,
+      })
+      .catch((error) => {
+        Logout();
+      });
 
     localStorage.setItem("authTokens", JSON.stringify(response.data));
 

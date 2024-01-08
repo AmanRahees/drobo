@@ -25,6 +25,7 @@ function Category() {
         setCategoryData(response.data);
       }
     });
+    // eslint-disable-next-line
   }, []);
   const hanldeToastMessages = (type, message) => {
     if (type === "success") {

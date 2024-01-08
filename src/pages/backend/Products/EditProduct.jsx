@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
+import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/backend/Struct/Struct";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./product.css";
 
-function AddProduct() {
+function EditProduct() {
   const api = useAxios();
   const navigate = useNavigate();
+  const { id } = useParams();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [formData, setFormData] = useState({
@@ -55,13 +57,13 @@ function AddProduct() {
       toast.error("Every Field is Required!");
     } else {
       api
-        .post("admin/products", formData, {
+        .put(`admin/products/${id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
         .then((response) => {
-          if (response.status === 201) {
+          if (response.status === 200) {
             navigate("./..");
           }
         })
@@ -71,6 +73,26 @@ function AddProduct() {
         });
     }
   };
+  useEffect(() => {
+    api
+      .get(`admin/products/${id}`)
+      .then((response) => {
+        let data = response.data;
+        setFormData({
+          product_name: data.product_name,
+          slug: data.slug,
+          base_image: data.base_image,
+          description: data.description,
+          category: data.category,
+          brand: data.brand,
+          status: data.status,
+        });
+      })
+      .catch((error) => {
+        toast.error("Failed to fetch Data!");
+      });
+    // eslint-disable-next-line
+  }, []);
   useEffect(() => {
     api
       .get("admin/get-descriptors")
@@ -85,7 +107,7 @@ function AddProduct() {
   }, []);
   return (
     <Struct>
-      <h1 className="text-3xl md:text-4xl text-sub-color">Add Product</h1>
+      <h1 className="text-3xl md:text-4xl text-sub-color">Edit Product</h1>
       <div className="flex justify-end items-center gap-2">
         Status:
         <input
@@ -132,10 +154,9 @@ function AddProduct() {
                   <select
                     name="category"
                     onChange={handleInputChange}
-                    value={formData.category}
+                    value={formData.category.id}
                     className="_pdt_select"
                   >
-                    <option>Select an Option</option>
                     {categories.map((category, index) => (
                       <option key={index} value={category.id}>
                         {category.category_name}
@@ -148,12 +169,11 @@ function AddProduct() {
                   <select
                     name="brand"
                     onChange={handleInputChange}
-                    value={formData.brand}
+                    value={formData.brand.id}
                     className="_pdt_select"
                   >
-                    <option>Select an Option</option>
-                    {brands.map((brand, index) => (
-                      <option key={index} value={brand.id}>
+                    {brands.map((brand) => (
+                      <option key={brand.id} value={brand.id}>
                         {brand.brand_name}
                       </option>
                     ))}
@@ -200,7 +220,11 @@ function AddProduct() {
                         X
                       </button>
                       <img
-                        src={URL.createObjectURL(formData.base_image)}
+                        src={
+                          typeof formData.base_image === "string"
+                            ? `${apiUrl}${formData.base_image}`
+                            : URL.createObjectURL(formData.base_image)
+                        }
                         alt={formData.base_image.name}
                       />
                     </div>
@@ -236,4 +260,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default EditProduct;

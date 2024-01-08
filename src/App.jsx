@@ -19,6 +19,9 @@ import Brands from "./pages/backend/Brands/Brands";
 import Products from "./pages/backend/Products/Products";
 import AddProduct from "./pages/backend/Products/AddProduct";
 import Orders from "./pages/backend/Orders/Orders";
+import EditProduct from "./pages/backend/Products/EditProduct";
+import Variants from "./pages/backend/Variants/Variants";
+import AddVariant from "./pages/backend/Variants/AddVariant";
 
 function App() {
   return (
@@ -43,6 +46,12 @@ function App() {
             <Route path="/admin/brands" element={<Brands />} />
             <Route path="/admin/products" element={<Products />} />
             <Route path="/admin/products/add" element={<AddProduct />} />
+            <Route path="/admin/products/:id" element={<EditProduct />} />
+            <Route path="/admin/products/:slug/:id" element={<Variants />} />
+            <Route
+              path="/admin/products/:slug/:id/add"
+              element={<AddVariant />}
+            />
             <Route path="/admin/orders" element={<Orders />} />
           </Route>
 

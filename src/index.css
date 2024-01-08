@@ -74,6 +74,9 @@ body::-webkit-scrollbar {
 .bg-secondary-color {
   background: var(--secondary-color);
 }
+.border-color {
+  border-color: #333;
+}
 .text-sub-color {
   color: var(--sub-color);
 }

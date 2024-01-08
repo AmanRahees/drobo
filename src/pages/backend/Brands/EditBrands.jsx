@@ -5,39 +5,37 @@ import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import InlineBox from "../../../components/backend/InlineBox/InlineBox";
 
-function EditCategory({
+function EditBrands({
   selectedId,
   setEditModal,
-  setCategoryData,
-  categoryData,
+  setBrandsData,
+  brandsData,
   hanldeToastMessages,
 }) {
   const api = useAxios();
-  const selectedValues = categoryData.find(
-    (category) => category.id === selectedId
-  );
+  const selectedValues = brandsData.find((brand) => brand.id === selectedId);
   const [formData, setFormData] = useState({
-    category_name: selectedValues.category_name,
-    category_image: selectedValues.category_image,
+    brand_name: selectedValues.brand_name,
+    brand_image: selectedValues.brand_image,
     status: selectedValues.status,
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-  const handleEditCategory = () => {
+  const handleEditBrand = () => {
     api
-      .put(`admin/category/${selectedId}`, formData, {
+      .put(`admin/brand/${selectedId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         if (response.status === 200) {
-          const updateTheData = categoryData.map((item) =>
+          const updatedData = brandsData.map((item) =>
             item.id === selectedId ? { ...item, ...response.data } : item
           );
-          setCategoryData(updateTheData);
+          setBrandsData(updatedData);
           setEditModal(false);
           hanldeToastMessages("success", "Updated Successfully!");
         }
@@ -56,27 +54,27 @@ function EditCategory({
   };
   return (
     <InlineBox>
-      <h1 className="inlineBox-heading">Edit Category</h1>
+      <h1 className="inlineBox-heading">Edit Brand</h1>
       <div className="modal-divider"></div>
       <div className="inlineBox-content">
         <div className="inlineForm">
           <div className="relative mb-3">
-            <label className="block mb-2">Category Name</label>
+            <label className="block mb-2">Brand Name</label>
             <input
               type="text"
-              name="category_name"
+              name="brand_name"
               onChange={handleInputChange}
-              value={formData.category_name}
+              value={formData.brand_name}
             />
           </div>
           <div className="relative mb-3">
-            <label className="block mb-2">Category Image</label>
-            {!formData.category_image ? (
+            <label className="block mb-2">Brand Image</label>
+            {!formData.brand_image ? (
               <div className="inline_ImageBox">
                 <input
                   type="file"
                   accept="image/*"
-                  name="category_image"
+                  name="brand_image"
                   onChange={handleImageChange}
                 />
                 <div className="flex justify-center flex-col gap-3">
@@ -97,7 +95,7 @@ function EditCategory({
                   onClick={() =>
                     setFormData((prevFormData) => ({
                       ...prevFormData,
-                      category_image: null,
+                      brand_image: null,
                     }))
                   }
                 >
@@ -105,11 +103,11 @@ function EditCategory({
                 </button>
                 <img
                   src={
-                    typeof formData.category_image === "string"
-                      ? `${apiUrl}${formData.category_image}`
-                      : URL.createObjectURL(formData.category_image)
+                    typeof formData.brand_image === "string"
+                      ? `${apiUrl}${formData.brand_image}`
+                      : URL.createObjectURL(formData.brand_image)
                   }
-                  alt={formData.category_image.name}
+                  alt={formData.brand_image.name}
                 />
               </div>
             )}
@@ -137,7 +135,7 @@ function EditCategory({
         </button>
         <button
           type="button"
-          onClick={() => handleEditCategory()}
+          onClick={() => handleEditBrand()}
           className="bg-red-600"
         >
           Yes
@@ -147,4 +145,4 @@ function EditCategory({
   );
 }
 
-export default EditCategory;
+export default EditBrands;

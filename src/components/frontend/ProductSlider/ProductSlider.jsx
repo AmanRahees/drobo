@@ -11,7 +11,7 @@ const ProductSlider = ({ heading, products }) => {
         {products.map((product, index) => (
           <div
             key={index}
-            className="_pdt_sliderItem"
+            className="_pdt_sliderItem shadow-md shadow-gray-200"
             onClick={() => navigate(`/${index}`)}
           >
             <span className="_pdtTop_slider">40%</span>

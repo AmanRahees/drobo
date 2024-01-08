@@ -1,0 +1,118 @@
+.varImage_Box_AE {
+  width: 100%;
+  /* border: 1px solid #222; */
+  margin-bottom: 30px;
+  /* padding: 10px; */
+}
+
+.varImage_list_AE {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.varImage_Item_AE {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #121212;
+  border: 1px dashed #333;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.varImage_Item_AE input[type="file"] {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.varImage_Box_AE img {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.variantTable_Box {
+  overflow: scroll;
+  border: 1px solid #222;
+}
+
+.variantTable_Box::-webkit-scrollbar {
+  display: none;
+}
+
+.variantTable_ {
+  width: 100%;
+}
+
+.variantTable_ thead th {
+  background: #121212;
+  color: var(--sub-color);
+  padding: 10px;
+  width: 50px;
+}
+
+.variantTable_ tbody tr {
+  border-top: 1px solid #222;
+}
+
+.variantTable_ tbody td {
+  text-align: center;
+  padding: 10px;
+}
+
+.variantTable_ tbody input[type="text"],
+.variantTable_ tbody input[type="number"] {
+  width: 120px;
+  background: transparent;
+  border: 1px solid #222;
+  outline: none;
+  padding: 6px;
+  border-radius: 2px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.variantTable_ tbody input::placeholder {
+  text-transform: none;
+}
+
+.bg-121 {
+  background: #121212;
+}
+
+.bg-222 {
+  background: #222;
+}
+
+.border-121 {
+  border-color: #222;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+#varImage_radio {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  outline: none;
+  border: 1px solid #1212126a;
+  cursor: pointer;
+}
+
+#varImage_radio:checked {
+  background-color: var(--sub-color);
+}
+
+@media (max-width: 576px) {
+  .varImage_list_AE {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,49 +1,39 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudArrowUp, faClose } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
-import { apiUrl } from "../../../services/constants";
 import InlineBox from "../../../components/backend/InlineBox/InlineBox";
 
-function EditCategory({
-  selectedId,
-  setEditModal,
-  setCategoryData,
-  categoryData,
-  hanldeToastMessages,
-}) {
+function AddBrands({ setAddModal, hanldeToastMessages, setBrandsData }) {
   const api = useAxios();
-  const selectedValues = categoryData.find(
-    (category) => category.id === selectedId
-  );
   const [formData, setFormData] = useState({
-    category_name: selectedValues.category_name,
-    category_image: selectedValues.category_image,
-    status: selectedValues.status,
+    brand_name: "",
+    brand_image: null,
+    brand_offer: 0,
+    status: true,
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-  const handleEditCategory = () => {
-    api
-      .put(`admin/category/${selectedId}`, formData, {
+  const HandleAddBrand = async () => {
+    await api
+      .post("admin/brand", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
-        if (response.status === 200) {
-          const updateTheData = categoryData.map((item) =>
-            item.id === selectedId ? { ...item, ...response.data } : item
-          );
-          setCategoryData(updateTheData);
-          setEditModal(false);
-          hanldeToastMessages("success", "Updated Successfully!");
+        if (response.status === 201) {
+          setBrandsData((prevBrands) => [...prevBrands, response.data]);
+          hanldeToastMessages("success", "Brand Added Successfully!");
+          setAddModal(false);
+        } else {
+          hanldeToastMessages("error", "Something went Wrong!");
         }
       })
       .catch((error) => {
-        hanldeToastMessages("error", "Something went wrong!");
+        hanldeToastMessages("error", "Something went Wrong!");
       });
   };
   const handleImageChange = (e) => {
@@ -56,27 +46,27 @@ function EditCategory({
   };
   return (
     <InlineBox>
-      <h1 className="inlineBox-heading">Edit Category</h1>
+      <h1 className="inlineBox-heading">Add Brand</h1>
       <div className="modal-divider"></div>
       <div className="inlineBox-content">
-        <div className="inlineForm">
+        <form className="inlineForm">
           <div className="relative mb-3">
-            <label className="block mb-2">Category Name</label>
+            <label className="block mb-2">Brand Name</label>
             <input
               type="text"
-              name="category_name"
+              name="brand_name"
               onChange={handleInputChange}
-              value={formData.category_name}
+              value={formData.brand_name}
             />
           </div>
           <div className="relative mb-3">
-            <label className="block mb-2">Category Image</label>
-            {!formData.category_image ? (
+            <label className="block mb-2">Brand Image</label>
+            {!formData.brand_image ? (
               <div className="inline_ImageBox">
                 <input
                   type="file"
                   accept="image/*"
-                  name="category_image"
+                  name="brand_image"
                   onChange={handleImageChange}
                 />
                 <div className="flex justify-center flex-col gap-3">
@@ -97,19 +87,15 @@ function EditCategory({
                   onClick={() =>
                     setFormData((prevFormData) => ({
                       ...prevFormData,
-                      category_image: null,
+                      brand_image: null,
                     }))
                   }
                 >
                   <FontAwesomeIcon icon={faClose} />
                 </button>
                 <img
-                  src={
-                    typeof formData.category_image === "string"
-                      ? `${apiUrl}${formData.category_image}`
-                      : URL.createObjectURL(formData.category_image)
-                  }
-                  alt={formData.category_image.name}
+                  src={URL.createObjectURL(formData.brand_image)}
+                  alt={formData.brand_image.name}
                 />
               </div>
             )}
@@ -124,20 +110,20 @@ function EditCategory({
               className="togglerInput"
             />
           </div>
-        </div>
+        </form>
       </div>
       <div className="modal-divider"></div>
       <div className="modal-btns">
         <button
           type="button"
-          onClick={() => setEditModal(false)}
+          onClick={() => setAddModal(false)}
           className="bg-gray-800"
         >
           Cancel
         </button>
         <button
           type="button"
-          onClick={() => handleEditCategory()}
+          onClick={() => HandleAddBrand()}
           className="bg-red-600"
         >
           Yes
@@ -147,4 +133,4 @@ function EditCategory({
   );
 }
 
-export default EditCategory;
+export default AddBrands;
