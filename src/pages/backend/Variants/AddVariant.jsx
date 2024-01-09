@@ -189,11 +189,15 @@ function AddVariant() {
     console.log(productVariants);
     console.log(productImages);
     api
-      .post("admin/variants", productVariants, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        "admin/add-alternatives",
+        { productVariants, productImages },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((response) => {
         console.log(response);
         toast.success("Successfull!");
@@ -281,6 +285,7 @@ function AddVariant() {
                 {image_item.image === null ? (
                   <div className="varImage_Item_AE">
                     <input
+                      accept="image/*"
                       type="file"
                       required
                       name="image"
