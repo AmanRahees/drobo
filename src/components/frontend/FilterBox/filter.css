@@ -7,56 +7,61 @@
   padding: 20px;
 }
 
-._aBox_filterBox {
-  padding: 20px;
-  border-bottom: 1px solid #1111112a;
-}
-
-.angleBtn_,
-.brndAngleBtn_,
-.ctgyAngleBtn_ {
+._filterAngle {
   transition: all 0.3s ease;
 }
 
-.angleBtn_.active,
-.brndAngleBtn_.active,
-.ctgyAngleBtn_.active {
+._filterAngle.active {
   transform: rotate(-180deg);
 }
 
-._content_filterBox,
-._ctgy_filters,
-._brnd_filters {
+.filterBox_content {
+  padding: 18px;
+  transition: 0.1s ease-in;
+}
+
+.filterBox_content.active {
   height: 0;
+  padding: 0;
   overflow: hidden;
-  transition: all 0.5s ease;
 }
 
-._content_filterBox.active {
-  height: 100%;
-  animation: _filterDropIn 0.5s linear;
+.filtersHieght {
+  max-height: 150px;
+  overflow-y: scroll;
 }
 
-._ctgy_filters.active,
-._brnd_filters.active {
-  height: 100%;
-  animation: _filterDropIn 0.5s linear;
+.filtersHieght::-webkit-scrollbar {
+  display: none;
 }
 
-@keyframes _filterDropIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-._evyH_filter {
+.filterBlock_contains {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.filterBlock_contains .filOps {
+  font-size: 12px;
+  padding: 5px 10px;
   color: var(--primary-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 6px;
+}
+
+.filterBlock_contains button.active {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+}
+
+.filActives {
+  font-size: 12px;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
 }
 
 @media (max-width: 996px) {

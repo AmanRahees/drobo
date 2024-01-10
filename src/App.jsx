@@ -35,7 +35,10 @@ function App() {
 
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/:name" element={<ProuductPage />} />
+          <Route
+            path="shop/:category/:id/:slug/:var_id"
+            element={<ProuductPage />}
+          />
 
           <Route element={<AuthRoute />}></Route>
 

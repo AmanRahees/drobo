@@ -5,89 +5,88 @@ import "./filter.css";
 
 function FilterBox() {
   const [showFilter, setShowFilter] = useState(true);
-  const [showCategory, setShowCategory] = useState(true);
-  const [showBrand, setShowBrand] = useState(true);
+  const [filters, setFilters] = useState([]);
   return (
     <>
       <div className="_top_filterBox">
         <h1>Filters</h1>
-        <button
-          className={`angleBtn_ ${showFilter ? "active" : ""}`}
-          onClick={() => setShowFilter(!showFilter)}
-        >
-          <FontAwesomeIcon icon={faAngleDown} />
+        <button onClick={() => setShowFilter(!showFilter)}>
+          <FontAwesomeIcon
+            className={`_filterAngle ${showFilter ? "active" : ""}`}
+            icon={faAngleDown}
+          />
         </button>
       </div>
-      {
-        <div className={`_content_filterBox ${showFilter ? "active" : ""}`}>
-          <>
-            <div className="_aBox_filterBox">
-              <div className="_evyH_filter">
-                <h1>Category</h1>
-                <button
-                  className={`ctgyAngleBtn_ ${showCategory ? "active" : ""}`}
-                  onClick={() => setShowCategory(!showCategory)}
-                >
-                  <FontAwesomeIcon icon={faAngleDown} />
-                </button>
-              </div>
-              <div className={`_ctgy_filters ${showCategory ? "active" : ""}`}>
-                <label className="block p-1 ml-3 mt-3">
-                  <input type="checkbox" /> Mobile
-                </label>
-                <label className="block p-1 ml-3">
-                  <input type="checkbox" /> Mobile
-                </label>
-                <label className="block p-1 ml-3">
-                  <input type="checkbox" /> Mobile
-                </label>
-                <label className="block p-1 ml-3">
-                  <input type="checkbox" /> Mobile
-                </label>
-              </div>
+      <div className={`filterBox_content ${showFilter ? "" : "active"}`}>
+        <form className="mb-3">
+          <h1 className="text-primary-color pb-3">SELECTED FILTERS</h1>
+          <div className="filtersHieght">
+            <div className="filterBlock_contains my-1">
+              <button type="button" className="filActives">
+                MOBILES &times;
+              </button>
+              <button type="button" className="filActives">
+                ELECTRONICS &times;
+              </button>
+              <button type="button" className="filActives">
+                LAPTOPS &times;
+              </button>
+              <button type="button" className="filActives">
+                USBS &times;
+              </button>
+              <button type="button" className="filActives">
+                ACCESSORIES &times;
+              </button>
+              <button type="button" className="filActives">
+                TABLETS &times;
+              </button>
             </div>
-            <div className="_aBox_filterBox">
-              <div className="_evyH_filter">
-                <h1>Brand</h1>
-                <button
-                  className={`brndAngleBtn_ ${showBrand ? "active" : ""}`}
-                  onClick={() => setShowBrand(!showBrand)}
-                >
-                  <FontAwesomeIcon icon={faAngleDown} />
-                </button>
-              </div>
-              <div className={`_brnd_filters ${showBrand ? "active" : ""}`}>
-                <label className="block p-1 ml-3 mt-3">
-                  <input type="checkbox" /> Mobile
-                </label>
-                <label className="block p-1 ml-3">
-                  <input type="checkbox" /> Mobile
-                </label>
-                <label className="block p-1 ml-3">
-                  <input type="checkbox" /> Mobile
-                </label>
-                <label className="block p-1 ml-3">
-                  <input type="checkbox" /> Mobile
-                </label>
-              </div>
+          </div>
+          <div className="flex justify-end pt-2 gap-1">
+            <button
+              type="button"
+              className="text-sm bg-red-500 text-white px-2 py-1 rounded"
+            >
+              Clear
+            </button>
+            <button
+              type="submit"
+              className="text-sm bg-teal-700 rounded text-white px-3 py-1"
+            >
+              Apply
+            </button>
+          </div>
+        </form>
+        <hr className="mb-2" />
+        <div className="mb-3">
+          <h1 className="text-primary-color pb-3">CATEGORY</h1>
+          <div className="filtersHieght">
+            <div className="filterBlock_contains my-1">
+              <button className="filOps active">MOBILES &times;</button>
+              <button className="filOps">ELECTRONICS</button>
+              <button className="filOps">LAPTOPS</button>
+              <button className="filOps">USBS</button>
+              <button className="filOps">ACCESSORIES</button>
+              <button className="filOps">TABLETS</button>
             </div>
-            <div className="_aBox_filterBox">
-              <div className="_evyH_filter">
-                <h1>Price</h1>
-                <button
-                  className={`text-green-900 text-sm`}
-                  onClick={() => setShowBrand(!showBrand)}
-                >
-                  Clear
-                </button>
-              </div>
-              <div className="mt-2">
-                <input type="range" className="w-full" />
-              </div>
-            </div>
-          </>
+          </div>
         </div>
-      }
+        <hr className="mb-2" />
+        <div className="">
+          <h1 className="text-primary-color pb-3">BRANDS</h1>
+          <div className="filtersHieght">
+            <div className="filterBlock_contains my-1">
+              <button className="filOps active">MOBILES &times;</button>
+              <button className="filOps">ELECTRONICS</button>
+              <button className="filOps">LAPTOPS</button>
+              <button className="filOps">USBS</button>
+              <button className="filOps">ACCESSORIES</button>
+              <button className="filOps">TABLETS</button>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </div>
     </>
   );
 }

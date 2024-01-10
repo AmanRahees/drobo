@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import useAxios from "../../../services/useAxios";
 import Struct from "../../../components/frontend/Struct/Struct";
 import ProductImgBlock from "../../../components/frontend/ProductBlock/ProductBlock";
 import "./product.css";
+import { apiUrl } from "../../../services/constants";
 
 function ProuductPage() {
+  const api = useAxios();
+  let { id, var_id } = useParams();
+  const [productData, setProductData] = useState();
   const [selectedColor, setSelectedColor] = useState(1);
   const [selectedRam, setSelectedRam] = useState(1);
   const [selectedStorage, setSelectedStorage] = useState(1);
@@ -17,6 +23,21 @@ function ProuductPage() {
     "https://lh3.googleusercontent.com/Z_hNxWoSZ6J46N31m7A_KvHdvFHI9sFd1_ajACvM8eSSON9Vwb8Sz0T6ubX6MSB3QUz6ThgqjZo5qRdLJdhSaLzvn-u6yivWPmo=rw-e365-w3000",
     "https://lh3.googleusercontent.com/Z_hNxWoSZ6J46N31m7A_KvHdvFHI9sFd1_ajACvM8eSSON9Vwb8Sz0T6ubX6MSB3QUz6ThgqjZo5qRdLJdhSaLzvn-u6yivWPmo=rw-e365-w3000",
   ];
+  useEffect(() => {
+    api
+      .get(`/shop/product/${id}`)
+      .then((response) => {
+        setProductData(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // eslint-disable-next-line
+  }, []);
+  const curr_variant = productData?.variants.find(
+    (variant) => variant.variant_id === +var_id
+  );
   return (
     <Struct>
       <div className="bg-white p-3 rounded-md">
@@ -24,26 +45,27 @@ function ProuductPage() {
           <div className="_pdt_imgBlock">
             <ProductImgBlock images={productImgs} />
             <div className="flex justify-center my-2 md:mx-7">
-              <button className="flex justify-center items-center gap-3 bg-primary-color text-white py-2 w-full">
+              <button className="flex justify-center items-center gap-3 bg-primary-color text-white py-2 px-5">
                 <FontAwesomeIcon icon={faCartShopping} />
                 Add to Cart
+              </button>
+              <button className="flex justify-center items-center gap-3 bg-primary-color text-white py-2 px-5">
+                <FontAwesomeIcon icon={faCartShopping} />
+                Buy Now
               </button>
             </div>
           </div>
           <div className="_pdt_detail">
             <p className="_detailName">
-              APPLE iPhone 15 Pro (Natural Titanium, 128 GB)
+              {productData?.product_name} (Natural Titanium, 128 GB)
             </p>
             <h1 className="_detailPrice">
-              ₹28,347 <strike>₹34,347</strike> <span>20%</span>
+              ₹{curr_variant?.price.toLocaleString("en-IN")}{" "}
+              <strike>₹{curr_variant?.price.toLocaleString("en-IN")}</strike>{" "}
+              <span>20%</span>
             </h1>
             <b className="block mt-3 text-gray-700">description</b>
-            <p className="description_">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum,
-              velit maxime? Amet quas provident quibusdam minima nemo vero,
-              cupiditate eligendi dignissimos quo, accusantium nisi iure at
-              quia. Neque, tempore labore.
-            </p>
+            <p className="description_">{productData?.description}</p>
             <div className="_varOption">
               <span className="text-gray-700">
                 Color : <b>Black</b>
@@ -51,24 +73,39 @@ function ProuductPage() {
               <div className="_var_color">
                 <button
                   className={`${selectedColor === 1 ? "active" : ""}`}
-                  style={{ background: `#fff` }}
                   onClick={() => setSelectedColor(1)}
-                ></button>
-                <button
-                  className={`${selectedColor === 2 ? "active" : ""}`}
-                  style={{ background: `cadetblue` }}
-                  onClick={() => setSelectedColor(2)}
-                ></button>
-                <button
-                  className={`${selectedColor === 3 ? "active" : ""}`}
-                  style={{ background: `lightseagreen` }}
-                  onClick={() => setSelectedColor(3)}
-                ></button>
-                <button
-                  className={`${selectedColor === 4 ? "active" : ""}`}
-                  style={{ background: `rebeccapurple` }}
-                  onClick={() => setSelectedColor(4)}
-                ></button>
+                >
+                  <img
+                    src={`${apiUrl}${productData?.brand.brand_image}`}
+                    alt={productData?.brand.brand_name}
+                    title={productData?.brand.brand_name}
+                    className="w-10 rounded-md"
+                  />
+                </button>
+                <button onClick={() => setSelectedColor(1)}>
+                  <img
+                    src={`${apiUrl}${productData?.brand.brand_image}`}
+                    alt={productData?.brand.brand_name}
+                    title={productData?.brand.brand_name}
+                    className="w-10 rounded-md"
+                  />
+                </button>
+                <button onClick={() => setSelectedColor(1)}>
+                  <img
+                    src={`${apiUrl}${productData?.brand.brand_image}`}
+                    alt={productData?.brand.brand_name}
+                    title={productData?.brand.brand_name}
+                    className="w-10 rounded-md"
+                  />
+                </button>
+                <button onClick={() => setSelectedColor(1)}>
+                  <img
+                    src={`${apiUrl}${productData?.brand.brand_image}`}
+                    alt={productData?.brand.brand_name}
+                    title={productData?.brand.brand_name}
+                    className="w-10 rounded-md"
+                  />
+                </button>
               </div>
               <span className="text-gray-700">
                 Storage : <b>64 GB</b>
@@ -128,13 +165,36 @@ function ProuductPage() {
                   512 GB
                 </button>
               </div>
+              <span className="text-gray-700">
+                SIZE : <b>24 INCH</b>
+              </span>
+              <div className="_var_memory">
+                <button
+                  className={`${selectedRam === 1 ? "active" : ""}`}
+                  onClick={() => setSelectedRam(1)}
+                >
+                  64 GB
+                </button>
+                <button
+                  className={`${selectedRam === 2 ? "active" : ""}`}
+                  onClick={() => setSelectedRam(2)}
+                >
+                  128 GB
+                </button>
+                <button
+                  className={`${selectedRam === 3 ? "active" : ""}`}
+                  onClick={() => setSelectedRam(3)}
+                >
+                  256 GB
+                </button>
+              </div>
             </div>
             <div className="flex items-center gap-3 my-3">
               <b className="text-gray-700">Brand</b>
               <img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAzFBMVEUAAAD///9DQ0P7/PvKzMnZ3d6tsKzz9PKLjYrX2db4+fh7fnrm5+Wkp6PHycYVGRTR09Cvs7UOEA1KTUqQk4+4ureqrKoeIR03OjYcHhwYGRducGycn5t1eHQ8PjuRkpAoKyZXWlcHDgNiZWAuMC1RUlASFhBYVk/i4d63trFkYl0sKiQXFQseHBZ1cmzt6+c5MiwXDQB/eXhoYGEfGBgVDQ6hm5tWUlJEPz+PiYmDf36ppqkiHyM5Njl4dHjHxMcdIyUTGBo0PD9DS00mZxnlAAAEiUlEQVR4nO3c21raQBQF4IwBE0KEpArSAirVWmw9tNV6rDXa93+nCjF8CTOgldnsbbr+67nYi2SOJHEcAAAAAAAAAAAAAAAAAAAAAAAAAPifvFvfaLW5i6CzWa8ESqngHXchRDqrnkq95y6FRLOlJja5i6HgK1XqhJ1aPqD7gbse67pBPqA64a7Hug1VVOMuyLbeVEDV4q7IMi2g6nOXZFddC6i2uGuyal0PWLJuGOoJt7lrsmpND+jucBdlU0cPWLKRtGJI2OEuyqZB6S9hw5CwyV2UTVuGgD53UVbpqxkVcddk11AL6O1x12TVjn4JB9w12dXXAna5S7JsdTpgyfYU2lwRlO0KOk7hbEYNy7VnGitsK9a4q6GQSxi9/cVos6mf1EdP8dzG9CSxv9n8uJy6bNjs9irD8OQkDGstvxBlPNJ4kZ+/flv9cWvPC4e1tf5buLJ+rXgU6lX8ydXZ7fndlfxfFIN26BZau8MN2cffnZYyierGxm3P2LqyvuyyX2zPnG+ssVv8e2nHr81uHAnN2HNn15zerp/SO3D/kx/Nb6tWBW4aV/R9gyHl43BSC80351TLXe5A0wzHvAvqcUcq0tbUFlS4Q+WZjl8WV5MzcZiOCG0I97mTPaG5giND7mipA7KAQs6ppv/PtWuVO575FNuexgp3PuOfZdaIOOag7IQiZovPhAFl/GPzksXoKx1wZxs7pgvY4M6WmrPHW5CQuZ6uFwZfubOl6AbSY+5oqcOXbGVfRUgndL5QBVRC7lG6m1TGROEQLtgOuZM9OaIKKKUX0k33X7iTZdpEAb0j7mQZqsMLOWdsJ0QJ5TyLSRRQTjekSuhecgfLfCVKKGeguSRKKOftkhWihCF3sAkkfK3y36WelHU3WcJAzMNgpiearRAz43+jSnjNnSzznSqhmO0h2bpUznRBdtIm5nmh6PlaX0fMFxbIjto87mSZc6qE6gd3tCenZAmljDVnZAnFTIlkg6nyfnJnS1E9CqXEnOvTDTVSBpsLwoQyzqPO6DriY1c84443QraqGQklRLyiTKg8ATcq1TY/85s7IOkDQ2MH7PMi5Xwx5nGvbqjOvXNC5pmR+jYdcS84E9KOpinm7eISEp7zJpzzMpctvAGXMNbcMCekXbmN/OJOSHeWkYq5AzpOlTSge8udz3F+kyYUcAlpL2LA3gtHKHsi81yYobuIUk6/6ebEU+5omZgo4B13sAmiIykZw0zqmiThFXesPIq1m4j3RyduCRIKWM3k2f/igLivZNm+T+U8kZFJguer/gfePXcg3a7VhCK/xXdjMaCcp9kL7P1jKuMVYANbL0JVuYPMlNhZvYUCR5nMg40B1Uu4Y8zzsPhVDBPuEPPtze6LbhjF2/617/fi6uwfoppwR3iWeUR17+r5j3jcD3rmkwE5W8I5tg133naitxvc6Q3fyIehk6n39qqzPlGSTB0O3CXLLHMhD/Gko3nxn3kt/WowafiwrPLsGNTX4rjXnxtvbK/rt+P2tciFKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQBn9BcakTE8Z0+SZAAAAAElFTkSuQmCC"
-                alt="Apple"
-                title="Apple"
+                src={`${apiUrl}${productData?.brand.brand_image}`}
+                alt={productData?.brand.brand_name}
+                title={productData?.brand.brand_name}
                 className="w-10 rounded-md"
               />
             </div>
