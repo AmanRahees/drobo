@@ -1,0 +1,110 @@
+.cart-container {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  padding: 20px;
+}
+
+.cartH {
+  font-size: 28px;
+}
+
+.cart-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.cart_d1 {
+  width: 75%;
+}
+
+.cart_d2 {
+  background: var(--primary-color);
+  color: #fefefe;
+  width: 25%;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.cartTable {
+  width: 100%;
+  background: #fff;
+}
+
+.cartTable thead th {
+  padding: 10px 20px;
+  text-align: left;
+  border-bottom: 1px solid #ededed;
+}
+
+.cartTable tbody td {
+  padding: 10px 20px;
+  border-bottom: 1px solid #ededed;
+}
+
+.cartTable img {
+  width: 80px;
+  aspect-ratio: 1;
+  border-radius: 12px;
+}
+
+.sm_cartBlock {
+  display: none;
+}
+
+@media (max-width: 576px) {
+  .cart-wrapper {
+    display: block;
+  }
+  .cart_d1 {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .cart_d2 {
+    width: 100%;
+  }
+  .cartTable {
+    display: none;
+  }
+  .sm_cartBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .sm_cartItem {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "sm_cartItem_img sm_cartItem_img sm_cartItem_content sm_cartItem_content sm_cartItem_content sm_cartItem_content"
+      "sm_cartItem_img sm_cartItem_img sm_cartItem_content sm_cartItem_content sm_cartItem_content sm_cartItem_content"
+      "sm_cartItem_img sm_cartItem_img sm_cartItemF sm_cartItemF sm_cartItemF sm_cartItemF";
+    background: #f1f5f9;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e3ebf4;
+    border-radius: 12px;
+  }
+  .sm_cartItem_img {
+    grid-area: sm_cartItem_img;
+  }
+  .sm_cartItem_content {
+    grid-area: sm_cartItem_content;
+    padding: 0 10px;
+  }
+  .sm_cartItemF {
+    grid-area: sm_cartItemF;
+    padding: 0 10px;
+  }
+  .sm_cartItem_img img {
+    aspect-ratio: 1;
+    border-radius: 12px;
+  }
+  .sm_cartItem_content small {
+    font-size: 10px;
+  }
+}

@@ -1,14 +1,13 @@
-.loaderBox{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 5001;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.loaderBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loader {
@@ -19,13 +18,13 @@
   margin: 20px auto;
   position: relative;
   background: currentColor;
-  color: #FFF;
   box-sizing: border-box;
   animation: animloader 0.3s 0.3s linear infinite alternate;
 }
 
-.loader::after, .loader::before {
-  content: '';
+.loader::after,
+.loader::before {
+  content: "";
   width: 8px;
   height: 40px;
   border-radius: 4px;
@@ -35,7 +34,7 @@
   transform: translateY(-50%);
   left: 20px;
   box-sizing: border-box;
-  animation: animloader 0.3s  0.45s  linear infinite alternate;
+  animation: animloader 0.3s 0.45s linear infinite alternate;
 }
 .loader::before {
   left: -20px;
@@ -43,6 +42,10 @@
 }
 
 @keyframes animloader {
-  0%   { height: 48px} 
-  100% { height: 4px}
+  0% {
+    height: 48px;
+  }
+  100% {
+    height: 4px;
+  }
 }

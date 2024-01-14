@@ -17,7 +17,7 @@
 
 .filterBox_content {
   padding: 18px;
-  transition: 0.1s ease-in;
+  /* transition: 0.1s ease-in; */
 }
 
 .filterBox_content.active {

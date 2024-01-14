@@ -20,12 +20,16 @@ function Brands() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
   useEffect(() => {
-    api.get("admin/brand").then((response) => {
-      if (response.status === 200) {
-        setBrandsData(response.data);
-        console.log(response.data);
-      }
-    });
+    api
+      .get("admin/brand")
+      .then((response) => {
+        if (response.status === 200) {
+          setBrandsData(response.data);
+        }
+      })
+      .catch((error) => {
+        toast.warning("Server out!");
+      });
     // eslint-disable-next-line
   }, []);
   const hanldeToastMessages = (type, message) => {

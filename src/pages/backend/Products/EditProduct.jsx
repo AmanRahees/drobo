@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import AuthContext from "../../../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
@@ -12,6 +13,7 @@ import "./product.css";
 function EditProduct() {
   const api = useAxios();
   const navigate = useNavigate();
+  const { setLoading } = useContext(AuthContext);
   const { id } = useParams();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -74,6 +76,7 @@ function EditProduct() {
     }
   };
   useEffect(() => {
+    setLoading(true);
     api
       .get(`admin/products/${id}`)
       .then((response) => {
@@ -91,6 +94,7 @@ function EditProduct() {
       .catch((error) => {
         toast.error("Failed to fetch Data!");
       });
+    setLoading(false);
     // eslint-disable-next-line
   }, []);
   useEffect(() => {

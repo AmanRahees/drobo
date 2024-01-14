@@ -22,7 +22,7 @@ const Carousal = ({ banners }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, 5000);
+    }, 10000);
     return () => clearInterval(interval);
   }, [handleNext]);
   return (

@@ -1,12 +1,23 @@
-import React from 'react'
-import "./loader.css"
+import React from "react";
+import { useLocation } from "react-router-dom";
+import "./loader.css";
 
 function Loader() {
-    return (
-        <div className='loaderBox'>
-            <div className="loader"></div>
-        </div>
-      )
+  const location = useLocation();
+  console.log(location);
+  return (
+    <div
+      className={`loaderBox ${
+        location.pathname.includes("/admin") ? "bg-black" : "bg-primary-color"
+      }`}
+    >
+      <div
+        className={`loader ${
+          location.pathname.includes("/admin") ? "text-sub-color" : "text-white"
+        }`}
+      ></div>
+    </div>
+  );
 }
 
-export default Loader
+export default Loader;

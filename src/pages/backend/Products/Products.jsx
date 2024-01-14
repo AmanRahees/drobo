@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../../../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
@@ -13,18 +14,21 @@ import "./product.css";
 function Products() {
   const api = useAxios();
   const navigate = useNavigate();
+  const { setLoading } = useContext(AuthContext);
   const [productsData, setProductsData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   useEffect(() => {
+    setLoading(true);
     api
       .get("admin/products")
       .then((response) => {
         setProductsData(response.data);
       })
       .catch((error) => {
-        toast.error("Failed to take Data");
+        toast.error("Server out!");
       });
+    setLoading(false);
     // eslint-disable-next-line
   }, []);
   const handleSelected = (id) => {

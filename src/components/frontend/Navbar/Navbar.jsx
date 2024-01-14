@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
+import DataContainer from "../../../contexts/DataContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -23,6 +24,7 @@ import "./navbar.css";
 function Navbar() {
   const location = useLocation();
   const { userData, Logout } = useContext(AuthContext);
+  const { cartCounter } = useContext(DataContainer);
   const [showSidebar, setShowSidebar] = useState(false);
   const showSideBarRef = useRef(null);
   const handleClickOutside = (event) => {
@@ -92,15 +94,17 @@ function Navbar() {
                 </div>
               </div>
             )}
-            <button className="nav-cartBox" title="Cart">
+            <Link to="/shop/cart" className="nav-cartBox" title="Cart">
               <div className="relative">
                 <img src={cartIcon} alt="cart" />
-                <span className="cart-counter font-bold bg-teal-600">2</span>
+                <span className="cart-counter font-bold bg-teal-600">
+                  {cartCounter}
+                </span>
               </div>
-            </button>
+            </Link>
           </div>
         </div>
-        <div className="bg-primary-color w-full pb-4">
+        <div className="w-full py-3" style={{ background: "#232f3e" }}>
           <div className="flex justify-center items-center md:gap-7 lg:gap-10 text-white">
             <Link
               to="/"
@@ -142,10 +146,12 @@ function Navbar() {
                   Login
                 </Link>
               )}
-              <div className="nav-cartBox-sm relative">
+              <Link to="/shop/cart" className="nav-cartBox-sm relative">
                 <img src={cartIcon} alt="cart" />
-                <span className="cart-counter font-bold bg-teal-600">2</span>
-              </div>
+                <span className="cart-counter font-bold bg-teal-600">
+                  {cartCounter}
+                </span>
+              </Link>
             </div>
           </div>
           <div className="nav-search-sm">
@@ -192,7 +198,10 @@ function Navbar() {
                   <FontAwesomeIcon className="text-xl" icon={faShop} />
                   Shop
                 </Link>
-                <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
+                <Link
+                  to="/shop/cart"
+                  className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2"
+                >
                   <FontAwesomeIcon className="text-lg" icon={faCartShopping} />
                   Cart
                 </Link>
@@ -232,7 +241,10 @@ function Navbar() {
                   <FontAwesomeIcon className="text-xl" icon={faShop} />
                   Shop
                 </Link>
-                <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
+                <Link
+                  to="/shop/cart"
+                  className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2"
+                >
                   <FontAwesomeIcon className="text-lg" icon={faCartShopping} />
                   Cart
                 </Link>

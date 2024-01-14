@@ -45,9 +45,9 @@
 }
 
 ._var_color button {
-  width: 50px;
-  height: 50px;
-  border: 1px solid #b5b2b2;
+  width: 70px;
+  height: 70px;
+  border: 1px solid #ededed;
   box-shadow: 1px 1px 2px #1111113c;
 }
 
@@ -57,7 +57,7 @@
 }
 
 ._var_color button.active {
-  border: 1px solid var(--primary-color);
+  border: 1px solid teal;
 }
 
 ._var_memory {
@@ -95,6 +95,9 @@
 }
 
 @media (max-width: 576px) {
+  ._pdt_viewBox {
+    padding: 10px;
+  }
   ._detailName {
     font-size: 18px;
   }

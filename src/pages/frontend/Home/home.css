@@ -1,0 +1,136 @@
+._hm_CtgBox {
+  background: #fff;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 14px 4px #efeff1;
+  -webkit-box-shadow: 0px 2px 14px 4px #efeff1;
+  -moz-box-shadow: 0px 2px 14px 4px #efeff1;
+}
+
+._hm_CtgGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+}
+
+._hm_CtgItem {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-left: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+._hm_CtgItem p {
+  font-size: 18px;
+  color: var(--primary-color);
+}
+
+._hm_CtgItem span {
+  font-size: 14px;
+  color: #555;
+}
+
+._hm_CtgItem img {
+  aspect-ratio: 1;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+._hm_CtgItem:hover img {
+  transform: translateX(-5px);
+  scale: 1.4;
+}
+
+.hm_ecomF {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  color: var(--primary-color);
+  padding: 8px;
+  width: 100%;
+  gap: 3px;
+  border: 1px solid #ededed;
+}
+
+.ecomF_Item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  height: 100px;
+}
+
+.ecomF_Item p {
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.ecomF_Item span {
+  color: #666;
+}
+
+.ecomF_Icon {
+  font-size: 28px;
+  transition: all 0.8s ease;
+}
+
+.ecomF_Item:hover .ecomF_Icon {
+  transform: rotateY(360deg);
+}
+
+@media (max-width: 996px) {
+  ._hm_CtgGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  ._hm_CtgItem p {
+    font-size: 14px;
+  }
+  ._hm_CtgItem span {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  ._hm_CtgGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  ._hm_CtgBox {
+    margin: 10px 0;
+  }
+  ._hm_CtgGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  ._hm_CtgItem p {
+    font-size: 14px;
+  }
+  ._hm_CtgItem span {
+    font-size: 10px;
+  }
+  .hm_ecomF {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ecomF_Item {
+    height: 60px;
+  }
+  .ecomF_Item p {
+    font-size: 12px;
+    line-height: 20px;
+  }
+  .ecomF_Item span {
+    font-size: 8px;
+    color: #666;
+  }
+  .ecomF_Icon {
+    font-size: 20px;
+    transition: all 0.5s ease;
+  }
+}

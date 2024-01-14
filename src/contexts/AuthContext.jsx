@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { apiUrl } from "../services/constants";
 import axiosInstance from "../services/axios";
+import Loader from "../components/Loader/Loader";
 
 const AuthContext = createContext();
 
@@ -115,7 +116,9 @@ export const AuthProvider = ({ children }) => {
     error: error,
   };
   return (
-    <AuthContext.Provider value={ContextData}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={ContextData}>
+      {loading ? <Loader /> : children}
+    </AuthContext.Provider>
   );
 };
 

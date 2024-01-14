@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ShopDataProvider } from "./contexts/DataContainer";
 import { AdminPrivateRoute, AdminAuthRoute } from "./utils/PrivateRoute";
 import { PublicRoute, AuthRoute } from "./utils/PublicRoute";
 
@@ -22,46 +23,50 @@ import Orders from "./pages/backend/Orders/Orders";
 import EditProduct from "./pages/backend/Products/EditProduct";
 import Variants from "./pages/backend/Variants/Variants";
 import AddVariant from "./pages/backend/Variants/AddVariant";
+import Cart from "./pages/frontend/Cart/Cart";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <Routes>
-          <Route element={<PublicRoute />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Route>
+        <ShopDataProvider>
+          <Routes>
+            <Route element={<PublicRoute />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Route>
 
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route
-            path="shop/:category/:id/:slug/:var_id"
-            element={<ProuductPage />}
-          />
-
-          <Route element={<AuthRoute />}></Route>
-
-          <Route element={<AdminPrivateRoute />}>
-            <Route path="/admin" element={<Dashboard />} />
-            <Route path="/admin/customers" element={<Customer />} />
-            <Route path="/admin/category" element={<Category />} />
-            <Route path="/admin/brands" element={<Brands />} />
-            <Route path="/admin/products" element={<Products />} />
-            <Route path="/admin/products/add" element={<AddProduct />} />
-            <Route path="/admin/products/:id" element={<EditProduct />} />
-            <Route path="/admin/products/:slug/:id" element={<Variants />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
             <Route
-              path="/admin/products/:slug/:id/add"
-              element={<AddVariant />}
+              path="shop/:category/:id/:slug/:var_id"
+              element={<ProuductPage />}
             />
-            <Route path="/admin/orders" element={<Orders />} />
-          </Route>
+            <Route path="/shop/cart" element={<Cart />} />
 
-          <Route element={<AdminAuthRoute />}>
-            <Route path="/admin/login" element={<AdminLogin />} />
-          </Route>
-        </Routes>
+            <Route element={<AuthRoute />}></Route>
+
+            <Route element={<AdminPrivateRoute />}>
+              <Route path="/admin" element={<Dashboard />} />
+              <Route path="/admin/customers" element={<Customer />} />
+              <Route path="/admin/category" element={<Category />} />
+              <Route path="/admin/brands" element={<Brands />} />
+              <Route path="/admin/products" element={<Products />} />
+              <Route path="/admin/products/add" element={<AddProduct />} />
+              <Route path="/admin/products/:id" element={<EditProduct />} />
+              <Route path="/admin/products/:slug/:id" element={<Variants />} />
+              <Route
+                path="/admin/products/:slug/:id/add"
+                element={<AddVariant />}
+              />
+              <Route path="/admin/orders" element={<Orders />} />
+            </Route>
+
+            <Route element={<AdminAuthRoute />}>
+              <Route path="/admin/login" element={<AdminLogin />} />
+            </Route>
+          </Routes>
+        </ShopDataProvider>
       </AuthProvider>
     </Router>
   );

@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
+import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/backend/Struct/Struct";
 
 function Variants() {
   const api = useAxios();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState();
   const [variants, setVariants] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [deleteModal, setDeleteModal] = useState(false);
   useEffect(() => {
     api
-      .get(`admin/products/${id}`)
+      .get(`admin/variants/${id}`)
       .then((response) => {
         if (response.status === 200) {
-          setProduct(response.data);
+          setProduct(response.data.product);
+          setVariants(response.data.variants);
+          console.log(response.data);
         }
       })
       .catch((error) => {
@@ -33,24 +38,76 @@ function Variants() {
       setSelected((prevSelected) => [...prevSelected, id]);
     }
   };
+  const handleStatusChange = (id) => {
+    if (selected.includes(id)) {
+      setSelected((prevSelected) =>
+        prevSelected.filter((selectedId) => selectedId !== id)
+      );
+    } else {
+      setSelected((prevSelected) => [...prevSelected, id]);
+    }
+  };
   return (
     <Struct>
       <div className="float-right flex flex-col-reverse md:flex-row gap-2 mb-2">
         {selected.length > 0 && (
           <button
-            // onClick={() => setDeleteModal(true)}
+            onClick={() => console.log(selected)}
             className="bg-red-600 py-1 px-3 rounded-md"
           >
             <FontAwesomeIcon icon={faTrash} /> ({selected.length})
           </button>
         )}
-        <Link className="bg-sub-color py-1 px-3 rounded-md" to="add">
+        <Link to="add" className="bg-sub-color py-1 px-3 rounded-md">
           Add +
         </Link>
       </div>
-      <h1 className="text-3xl md:text-4xl text-sub-color">
+      <h1 className="text-3xl md:text-4xl capitalize">
         {product?.product_name}
       </h1>
+
+      <div className="pl-searchBox">
+        <input type="text" placeholder="Search..." />
+        <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
+      </div>
+
+      <div className="_pdtBox">
+        {variants.map((variant, index) => (
+          <div key={index} className="_pdtItem border border-121">
+            <img src={`${apiUrl}${variant?.image}`} alt="" />
+            <input
+              type="checkbox"
+              className="_pdtCheckBox"
+              onChange={() => handleSelected(variant?.id)}
+              checked={selected.includes(variant?.id)}
+            />
+            <div className="absolute top-2 right-3">
+              <input
+                type="checkbox"
+                onChange={() => handleStatusChange(product.id)}
+                checked={variant?.status}
+                className="togglerInput my-2 float-end"
+              />
+            </div>
+            <div className="_variantListDown_ p-2 overflow-hidden">
+              <button
+                onClick={() => navigate(`/admin/products/${variant?.id}`)}
+                className="float-end bg-blue-900 p-2 px-2 rounded text-sm"
+              >
+                <FontAwesomeIcon icon={faPen} />
+              </button>
+              {Object.entries(variant.product_attributes).map(
+                ([attr, value]) => (
+                  <span key={attr} className="my-1 block">
+                    {attr} : <b>{value}</b>
+                  </span>
+                )
+              )}
+              <h1> ₹{variant?.price.toLocaleString("en-IN")} </h1>
+            </div>
+          </div>
+        ))}
+      </div>
     </Struct>
   );
 }

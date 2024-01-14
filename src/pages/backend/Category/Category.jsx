@@ -20,11 +20,16 @@ function Category() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
   useEffect(() => {
-    api.get("admin/category").then((response) => {
-      if (response.status === 200) {
-        setCategoryData(response.data);
-      }
-    });
+    api
+      .get("admin/category")
+      .then((response) => {
+        if (response.status === 200) {
+          setCategoryData(response.data);
+        }
+      })
+      .catch((error) => {
+        toast.warning("Server out!");
+      });
     // eslint-disable-next-line
   }, []);
   const hanldeToastMessages = (type, message) => {

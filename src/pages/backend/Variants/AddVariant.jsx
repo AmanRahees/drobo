@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import AuthContext from "../../../contexts/AuthContext";
 import useAxios from "../../../services/useAxios";
 import Struct from "../../../components/backend/Struct/Struct";
 import Modal from "../../../components/backend/Modal/Modal";
@@ -16,6 +17,8 @@ import "./variants.css";
 
 function AddVariant() {
   const api = useAxios();
+  const navigate = useNavigate();
+  const { setLoading } = useContext(AuthContext);
   const { id } = useParams();
   const [idCount, setIdCount] = useState(1);
   const [imageCount, setImageCount] = useState(1);
@@ -40,9 +43,11 @@ function AddVariant() {
     },
   ]);
   useEffect(() => {
+    setLoading(true);
     api.get(`admin/products/${id}`).then((response) => {
       setProduct(response.data);
     });
+    setLoading(false);
     // eslint-disable-next-line
   }, []);
   const handleAttrChange = (e) => {
@@ -186,8 +191,7 @@ function AddVariant() {
   };
   const handleVariantSubmit = (e) => {
     e.preventDefault();
-    console.log(productVariants);
-    console.log(productImages);
+    setLoading(true);
     api
       .post(
         "admin/add-alternatives",
@@ -199,12 +203,13 @@ function AddVariant() {
         }
       )
       .then((response) => {
-        console.log(response);
         toast.success("Successfull!");
+        navigate(-1);
       })
       .catch((error) => {
         toast.error("An Error Occured!");
       });
+    setLoading(false);
   };
   return (
     <Struct>
@@ -213,7 +218,9 @@ function AddVariant() {
       {!showFields && (
         <Modal>
           <form onSubmit={handleAttrSubmit} className="md:w-96">
-            <h1 className="modal-heading">Choose Specifications</h1>
+            <h1 className="modal-heading">
+              Choose Specifications <span className="text-xs">(Optional)</span>
+            </h1>
             <div className="modal-divider"></div>
             <div className="m-2">
               <label className="flex items-center gap-2 w-max">
@@ -260,8 +267,15 @@ function AddVariant() {
               </label>
             </div>
             <div className="flex justify-end gap-2">
+              <button
+                type="submit"
+                onClick={() => navigate(-1)}
+                className="px-3 py-1 bg-red-600 rounded"
+              >
+                Back
+              </button>
               <button type="submit" className="px-3 py-1 bg-green-600 rounded">
-                Submit
+                Done
               </button>
             </div>
           </form>

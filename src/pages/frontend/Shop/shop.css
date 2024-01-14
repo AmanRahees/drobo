@@ -9,8 +9,10 @@
 
 ._shop-filterBox {
   width: 25%;
-  border: 1px solid #1111112a;
-  box-shadow: 2px 2px 8px #11111157;
+  border: 1px solid #ededed;
+  box-shadow: 0px 2px 14px 4px #efeff1;
+  -webkit-box-shadow: 0px 2px 14px 4px #efeff1;
+  -moz-box-shadow: 0px 2px 14px 4px #efeff1;
 }
 
 ._shop-ItemList {
@@ -22,13 +24,23 @@
 
 ._shop-Item {
   position: relative;
-  box-shadow: 1px 1px 6px #11111157;
+  border: 1px solid #ededed;
+  box-shadow: 0px 2px 14px 4px #efeff1;
+  -webkit-box-shadow: 0px 2px 14px 4px #efeff1;
+  -moz-box-shadow: 0px 2px 14px 4px #efeff1;
+  border-radius: 8px;
+  overflow: hidden;
   cursor: pointer;
 }
 
 ._shop-Item img {
   width: 100%;
   aspect-ratio: 1;
+  transition: all 0.3s ease;
+}
+
+._shop-Item:hover img {
+  scale: 1.05;
 }
 
 @media (max-width: 996px) {
@@ -52,6 +64,6 @@
   }
   ._shop-ItemList {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 5px;
   }
 }
