@@ -75,9 +75,12 @@ function Navbar() {
                   <FontAwesomeIcon className="nav-angle_" icon={faAngleDown} />
                 </button>
                 <div className="nav-userOpts_ absolute right-0 z-10 mt-3 w-48 origin-top-right rounded-md shadow-lg">
-                  <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
+                  <Link
+                    to="/profile"
+                    className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2"
+                  >
                     <FontAwesomeIcon className="text-xl" icon={faCircleUser} />
-                    <span>Account</span>
+                    <span>My Profile</span>
                   </Link>
                   <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
                     <FontAwesomeIcon className="text-lg" icon={faBoxOpen} />
@@ -126,7 +129,7 @@ function Navbar() {
             >
               Shop
             </Link>
-            <Link>Blogs</Link>
+            <Link>Offer Zone</Link>
             <Link>Contact</Link>
           </div>
         </div>

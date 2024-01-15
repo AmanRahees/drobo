@@ -8,8 +8,13 @@ import { PublicRoute, AuthRoute } from "./utils/PublicRoute";
 import Home from "./pages/frontend/Home/Home";
 import Login from "./pages/frontend/Auth/Login";
 import SignUp from "./pages/frontend/Auth/SignUp";
-import ProuductPage from "./pages/frontend/Shop/ProuductPage";
 import Shop from "./pages/frontend/Shop/Shop";
+import ProuductPage from "./pages/frontend/Shop/ProuductPage";
+import Cart from "./pages/frontend/Cart/Cart";
+import Profile from "./pages/frontend/Profile/Profile";
+import MyOrders from "./pages/frontend/Orders/MyOrders";
+import Checkout from "./pages/frontend/Checkout/Checkout";
+import AddAddress from "./pages/frontend/Checkout/AddAddress";
 
 // Admin
 import AdminLogin from "./pages/backend/Login/Login";
@@ -23,7 +28,6 @@ import Orders from "./pages/backend/Orders/Orders";
 import EditProduct from "./pages/backend/Products/EditProduct";
 import Variants from "./pages/backend/Variants/Variants";
 import AddVariant from "./pages/backend/Variants/AddVariant";
-import Cart from "./pages/frontend/Cart/Cart";
 
 function App() {
   return (
@@ -44,7 +48,15 @@ function App() {
             />
             <Route path="/shop/cart" element={<Cart />} />
 
-            <Route element={<AuthRoute />}></Route>
+            <Route element={<AuthRoute />}>
+              <Route path="/shop/cart/checkout" element={<Checkout />} />
+              <Route
+                path="/shop/cart/checkout/add-address"
+                element={<AddAddress />}
+              />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/orders" element={<MyOrders />} />
+            </Route>
 
             <Route element={<AdminPrivateRoute />}>
               <Route path="/admin" element={<Dashboard />} />

@@ -287,9 +287,12 @@ function Cart() {
                   <span className="text-md">TOTAL</span>
                   <span className="text-gray-200">$328974</span>
                 </div>
-                <button className="w-full bg-teal-600 py-2 my-2">
+                <Link
+                  to="checkout"
+                  className="block text-center w-full bg-teal-600 py-2 my-2"
+                >
                   checkout &rarr;
-                </button>
+                </Link>
               </div>
             </div>
           </div>

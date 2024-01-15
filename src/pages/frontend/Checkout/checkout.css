@@ -1,0 +1,38 @@
+._cktAdds {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+._cktAddsItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  background: #f1f5f9;
+  color: var(--primary-color);
+  padding: 12px;
+  border: 1px solid #cecece;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+._cktAddsItem p {
+  margin: 5px 0;
+}
+
+#cktAddress {
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media (max-width: 576px) {
+  ._cktAdds {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
