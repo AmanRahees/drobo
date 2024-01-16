@@ -11,6 +11,7 @@ export const ShopDataProvider = ({ children }) => {
   const [categoryData, setCategoryData] = useState([]);
   const [brandsData, setBrandData] = useState([]);
   const [cartCounter, setCartCounter] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -35,6 +36,7 @@ export const ShopDataProvider = ({ children }) => {
       .get("contexts/get-user-items")
       .then((response) => {
         setCartCounter(response.data.cart_counter);
+        setTotalAmount(response.data.total_amount);
       })
       .catch((error) => {
         console.log(error);
@@ -45,6 +47,7 @@ export const ShopDataProvider = ({ children }) => {
     category_data: categoryData,
     brands_data: brandsData,
     cartCounter: cartCounter,
+    totalAmount: totalAmount,
   };
 
   return (

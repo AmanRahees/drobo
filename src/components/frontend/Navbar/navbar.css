@@ -91,10 +91,6 @@
   padding: 10px;
 }
 
-.nav-cartBox img {
-  width: 32px;
-}
-
 .cart-counter {
   position: absolute;
   top: -7px;

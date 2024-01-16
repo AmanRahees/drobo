@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxios from "../../../services/useAxios";
 import Struct from "../../../components/frontend/Struct/Struct";
 
@@ -183,12 +183,13 @@ function AddAddress() {
               />
             </div>
             <div className="flex justify-end gap-2 col-span-1 md:col-span-2">
-              <button
+              <Link
+                to={-1}
                 type="submit"
                 className="bg-red-600 text-white px-3 py-1 rounded"
               >
                 Cancel
-              </button>
+              </Link>
               <button
                 type="submit"
                 className="bg-primary-color text-white px-3 py-1 rounded"

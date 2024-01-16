@@ -4,7 +4,6 @@ import "./loader.css";
 
 function Loader() {
   const location = useLocation();
-  console.log(location);
   return (
     <div
       className={`loaderBox ${

@@ -1,11 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../../../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faSearch,
+  faTableCells,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/backend/Struct/Struct";
+import Loader from "../../../components/Loader/Loader";
 import DeleteProduct from "./DeleteProduct";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,21 +19,20 @@ import "./product.css";
 function Products() {
   const api = useAxios();
   const navigate = useNavigate();
-  const { setLoading } = useContext(AuthContext);
   const [productsData, setProductsData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    setLoading(true);
     api
       .get("admin/products")
       .then((response) => {
         setProductsData(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         toast.error("Server out!");
       });
-    setLoading(false);
     // eslint-disable-next-line
   }, []);
   const handleSelected = (id) => {
@@ -64,6 +68,9 @@ function Products() {
         toast.error("Error Occured!");
       });
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Struct>
       <div className="float-right flex flex-col-reverse md:flex-row gap-2 mb-2">
@@ -84,53 +91,64 @@ function Products() {
       </div>
       <h1 className="text-3xl md:text-4xl text-sub-color">Products</h1>
 
-      <div className="pl-searchBox">
-        <input type="text" placeholder="Search..." />
-        <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
-      </div>
-
-      <div className="_pdtBox">
-        {productsData.map((product, index) => (
-          <div key={index} className="_pdtItem">
-            <img src={`${apiUrl}${product.base_image}`} alt="" />
-            <input
-              type="checkbox"
-              className="_pdtCheckBox"
-              onChange={() => handleSelected(product.id)}
-              checked={selected.includes(product.id)}
-            />
-            <div className="absolute top-2 right-3">
-              <input
-                type="checkbox"
-                onChange={() => handleStatusChange(product.id)}
-                checked={product.status}
-                className="togglerInput my-2 float-end"
-              />
-            </div>
-            <div className="_pdtDown">
-              <button
-                onClick={() => navigate(`/admin/products/${product.id}`)}
-                className="float-end bg-blue-900 p-2 px-2 rounded text-sm"
-              >
-                <FontAwesomeIcon icon={faPen} />
-              </button>
-              <h1>{product.product_name}</h1>
-              <span className="my-1">
-                Category : <b>{product.category.category_name}</b>
-              </span>
-              <span className="my-1">
-                Brand : <b>{product.brand.brand_name}</b>
-              </span>
-              <button
-                onClick={() => navigate(`${product.slug}/${product.id}`)}
-                className="w-full mt-3 bg-black py-2 rounded-md"
-              >
-                View →
-              </button>
-            </div>
+      {productsData.length > 0 ? (
+        <>
+          <div className="pl-searchBox">
+            <input type="text" placeholder="Search..." />
+            <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
           </div>
-        ))}
-      </div>
+
+          <div className="_pdtBox">
+            {productsData.map((product, index) => (
+              <div key={index} className="_pdtItem">
+                <img src={`${apiUrl}${product.base_image}`} alt="" />
+                <input
+                  type="checkbox"
+                  className="_pdtCheckBox"
+                  onChange={() => handleSelected(product.id)}
+                  checked={selected.includes(product.id)}
+                />
+                <div className="absolute top-2 right-3">
+                  <input
+                    type="checkbox"
+                    onChange={() => handleStatusChange(product.id)}
+                    checked={product.status}
+                    className="togglerInput my-2 float-end"
+                  />
+                </div>
+                <div className="_pdtDown">
+                  <button
+                    onClick={() => navigate(`/admin/products/${product.id}`)}
+                    className="float-end bg-blue-900 p-2 px-2 rounded text-sm"
+                  >
+                    <FontAwesomeIcon icon={faPen} />
+                  </button>
+                  <h1>{product.product_name}</h1>
+                  <span className="my-1">
+                    Category : <b>{product.category.category_name}</b>
+                  </span>
+                  <span className="my-1">
+                    Brand : <b>{product.brand.brand_name}</b>
+                  </span>
+                  <button
+                    onClick={() => navigate(`${product.slug}/${product.id}`)}
+                    className="w-full mt-3 bg-black py-2 rounded-md"
+                  >
+                    View →
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          <div className="flex flex-col">
+            <FontAwesomeIcon icon={faTableCells} className="text-9xl" />
+            <p className="text-center my-3 text-2xl">No Products Found!</p>
+          </div>
+        </div>
+      )}
 
       {deleteModal && (
         <DeleteProduct

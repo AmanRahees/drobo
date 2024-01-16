@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AuthContext from "../../../contexts/AuthContext";
 import {
@@ -6,11 +6,13 @@ import {
   faEyeSlash,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import Loader from "../../../components/Loader/Loader";
 import "./login.css";
 
 function AdminLogin() {
   const { AdminLogin: adminLogin } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,8 +25,14 @@ function AdminLogin() {
     e.preventDefault();
     adminLogin(formData.email, formData.password);
   };
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
   return (
     <div className="pl-authBox">
+      {loading && <Loader />}
       <div className="pl-authForm">
         <h1>drobo.</h1>
         <form onSubmit={handleFormSubmit}>

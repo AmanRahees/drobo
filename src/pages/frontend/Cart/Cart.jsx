@@ -1,33 +1,30 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../../../contexts/AuthContext";
+import DataContainer from "../../../contexts/DataContainer";
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/frontend/Struct/Struct";
+import Loader from "../../../components/Loader/Loader";
 import emptyCart from "../../../assets/imgs/empty-cart.png";
 import "./cart.css";
 
 function Cart() {
   const api = useAxios();
-  const { userData } = useContext(AuthContext);
+  const { totalAmount } = useContext(DataContainer);
   const [cartData, setCartData] = useState([]);
-  const getCartItems = () => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
     api
       .get("cart")
       .then((response) => {
         setCartData(response.data);
-        console.log(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-  useEffect(() => {
-    if (userData) {
-      getCartItems();
-    }
     // eslint-disable-next-line
-  }, [userData]);
+  }, []);
   const incrementQuantity = (id) => {
     const updatedCartData = cartData.map((item) =>
       item.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -65,6 +62,9 @@ function Cart() {
         console.log(error);
       });
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Struct>
       <div className="cart-container">
@@ -274,7 +274,7 @@ function Cart() {
               <div className="my-3">
                 <div className="flex justify-between">
                   <span className="text-md">SUBTOTAL</span>
-                  <span className="text-gray-200">$328974</span>
+                  <span className="text-gray-200">${totalAmount}</span>
                 </div>
                 <div className="flex justify-between my-3">
                   <span className="text-md">DISCOUNT</span>
@@ -285,7 +285,7 @@ function Cart() {
               <div className="my-3">
                 <div className="flex justify-between">
                   <span className="text-md">TOTAL</span>
-                  <span className="text-gray-200">$328974</span>
+                  <span className="text-gray-200">${totalAmount}</span>
                 </div>
                 <Link
                   to="checkout"

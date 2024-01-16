@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faTrash,
+  faPen,
+  faTableCells,
+} from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/backend/Struct/Struct";
+import Loader from "../../../components/Loader/Loader";
 
 function Variants() {
   const api = useAxios();
@@ -14,6 +20,7 @@ function Variants() {
   const [variants, setVariants] = useState([]);
   const [selected, setSelected] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     api
       .get(`admin/variants/${id}`)
@@ -21,7 +28,7 @@ function Variants() {
         if (response.status === 200) {
           setProduct(response.data.product);
           setVariants(response.data.variants);
-          console.log(response.data);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -47,6 +54,9 @@ function Variants() {
       setSelected((prevSelected) => [...prevSelected, id]);
     }
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Struct>
       <div className="float-right flex flex-col-reverse md:flex-row gap-2 mb-2">
@@ -66,48 +76,59 @@ function Variants() {
         {product?.product_name}
       </h1>
 
-      <div className="pl-searchBox">
-        <input type="text" placeholder="Search..." />
-        <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
-      </div>
-
-      <div className="_pdtBox">
-        {variants.map((variant, index) => (
-          <div key={index} className="_pdtItem border border-121">
-            <img src={`${apiUrl}${variant?.image}`} alt="" />
-            <input
-              type="checkbox"
-              className="_pdtCheckBox"
-              onChange={() => handleSelected(variant?.id)}
-              checked={selected.includes(variant?.id)}
-            />
-            <div className="absolute top-2 right-3">
-              <input
-                type="checkbox"
-                onChange={() => handleStatusChange(product.id)}
-                checked={variant?.status}
-                className="togglerInput my-2 float-end"
-              />
-            </div>
-            <div className="_variantListDown_ p-2 overflow-hidden">
-              <button
-                onClick={() => navigate(`/admin/products/${variant?.id}`)}
-                className="float-end bg-blue-900 p-2 px-2 rounded text-sm"
-              >
-                <FontAwesomeIcon icon={faPen} />
-              </button>
-              {Object.entries(variant.product_attributes).map(
-                ([attr, value]) => (
-                  <span key={attr} className="my-1 block">
-                    {attr} : <b>{value}</b>
-                  </span>
-                )
-              )}
-              <h1> ₹{variant?.price.toLocaleString("en-IN")} </h1>
-            </div>
+      {variants.length > 0 ? (
+        <>
+          <div className="pl-searchBox">
+            <input type="text" placeholder="Search..." />
+            <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
           </div>
-        ))}
-      </div>
+
+          <div className="_pdtBox">
+            {variants.map((variant, index) => (
+              <div key={index} className="_pdtItem border border-121">
+                <img src={`${apiUrl}${variant?.image}`} alt="" />
+                <input
+                  type="checkbox"
+                  className="_pdtCheckBox"
+                  onChange={() => handleSelected(variant?.id)}
+                  checked={selected.includes(variant?.id)}
+                />
+                <div className="absolute top-2 right-3">
+                  <input
+                    type="checkbox"
+                    onChange={() => handleStatusChange(product.id)}
+                    checked={variant?.status}
+                    className="togglerInput my-2 float-end"
+                  />
+                </div>
+                <div className="_variantListDown_ p-2 overflow-hidden">
+                  <button
+                    onClick={() => navigate(`/admin/products/${variant?.id}`)}
+                    className="float-end bg-blue-900 p-2 px-2 rounded text-sm"
+                  >
+                    <FontAwesomeIcon icon={faPen} />
+                  </button>
+                  {Object.entries(variant.product_attributes).map(
+                    ([attr, value]) => (
+                      <span key={attr} className="my-1 block">
+                        {attr} : <b>{value}</b>
+                      </span>
+                    )
+                  )}
+                  <h1> ₹{variant?.price.toLocaleString("en-IN")} </h1>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          <div className="flex flex-col">
+            <FontAwesomeIcon icon={faTableCells} className="text-9xl" />
+            <p className="text-center my-3 text-2xl">No Variants Found!</p>
+          </div>
+        </div>
+      )}
     </Struct>
   );
 }

@@ -98,8 +98,22 @@ function Navbar() {
               </div>
             )}
             <Link to="/shop/cart" className="nav-cartBox" title="Cart">
-              <div className="relative">
-                <img src={cartIcon} alt="cart" />
+              <div
+                className={`relative ${
+                  location.pathname === "/shop/cart"
+                    ? "bg-teal-600 rounded-full"
+                    : ""
+                }`}
+              >
+                <img
+                  src={cartIcon}
+                  alt="cart"
+                  className={`${
+                    location.pathname === "/shop/cart"
+                      ? "w-[25px] m-2"
+                      : "w-[32px]"
+                  }`}
+                />
                 <span className="cart-counter font-bold bg-teal-600">
                   {cartCounter}
                 </span>
@@ -122,7 +136,7 @@ function Navbar() {
             <Link
               to="/shop"
               className={`${
-                location.pathname.includes("/shop")
+                location.pathname === "/shop"
                   ? "border-b border-teal-600 text-teal-600"
                   : ""
               }`}

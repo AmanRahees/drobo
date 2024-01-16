@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import DataContainer from "../../../contexts/DataContainer";
 import useAxios from "../../../services/useAxios";
 import Struct from "../../../components/frontend/Struct/Struct";
 import "./checkout.css";
@@ -7,26 +8,31 @@ import { apiUrl } from "../../../services/constants";
 
 function Checkout() {
   const api = useAxios();
+  const { totalAmount } = useContext(DataContainer);
   const [addresses, setAddresses] = useState([]);
   const [cartData, setCartData] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState();
   useEffect(() => {
     api
       .get("profile/address")
       .then((response) => {
         setAddresses(response.data);
+        setSelectedAddress(
+          response.data.length > 0 ? response.data[0].id : null
+        );
       })
       .catch((error) => {});
     api
       .get("cart")
       .then((response) => {
         setCartData(response.data);
-        console.log(response.data);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
     // eslint-disable-next-line
   }, []);
+  const handlePlaceOrder = () => {
+    console.log(selectedAddress);
+  };
   return (
     <Struct>
       <div className="cart-container">
@@ -42,8 +48,9 @@ function Checkout() {
                     <input
                       type="radio"
                       name="addressOption"
+                      onChange={() => setSelectedAddress(address.id)}
                       id={`addsOption${index}`}
-                      defaultChecked={index === 0 ? true : false}
+                      checked={selectedAddress === address.id}
                     />
                     <label
                       htmlFor={`addsOption${index}`}
@@ -71,7 +78,7 @@ function Checkout() {
               </div>
               <div className="flex justify-start">
                 <Link
-                  to="/shop/cart/checkout/add-address"
+                  to="/profile/add-address"
                   className="bg-primary-color text-white px-5 py-2 rounded"
                 >
                   Add Address +
@@ -119,7 +126,7 @@ function Checkout() {
             <div className="my-3">
               <div className="flex justify-between">
                 <span className="text-md">SUBTOTAL</span>
-                <span className="text-gray-200">$328974</span>
+                <span className="text-gray-200">${totalAmount}</span>
               </div>
               <div className="flex justify-between my-3">
                 <span className="text-md">DISCOUNT</span>
@@ -132,7 +139,10 @@ function Checkout() {
                 <span className="text-md">TOTAL</span>
                 <span className="text-gray-200">$328974</span>
               </div>
-              <button className="w-full bg-teal-600 py-2 my-2">
+              <button
+                onClick={handlePlaceOrder}
+                className="w-full bg-teal-600 py-2 my-2"
+              >
                 Place Order
               </button>
             </div>

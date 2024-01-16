@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faTrash,
+  faSearch,
+  faBoxes,
+} from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/backend/Struct/Struct";
+import Loader from "../../../components/Loader/Loader";
 import AddCategory from "./AddCategory";
 import EditCategory from "./EditCategory";
 import DeleteCategory from "./DeleteCategory";
@@ -19,12 +25,14 @@ function Category() {
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     api
       .get("admin/category")
       .then((response) => {
         if (response.status === 200) {
           setCategoryData(response.data);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -47,6 +55,9 @@ function Category() {
     setSelectedId(id);
     setEditModal(true);
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Struct>
       <button
@@ -57,62 +68,73 @@ function Category() {
       </button>
       <h1 className="text-3xl md:text-4xl text-sub-color">Category</h1>
 
-      <div className="pl-searchBox">
-        <input type="text" placeholder="Search..." />
-        <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
-      </div>
-
-      <div className="pl_filter my-4">
-        <button
-          onClick={() => setFilter("All")}
-          className={`${filter === "All" ? "active" : null}`}
-        >
-          All
-        </button>
-        <button
-          onClick={() => setFilter("Newest")}
-          className={`${filter === "Newest" ? "active" : null}`}
-        >
-          Newest
-        </button>
-        <button
-          onClick={() => setFilter("Oldest")}
-          className={`${filter === "Oldest" ? "active" : null}`}
-        >
-          Oldest
-        </button>
-        <button
-          onClick={() => setFilter("Disabled")}
-          className={`${filter === "Disabled" ? "active" : null}`}
-        >
-          Disabled
-        </button>
-      </div>
-
-      <div className="cbBox">
-        {categoryData.map((item, index) => (
-          <div key={index} className="cbItem">
-            <img src={`${apiUrl}${item.category_image}`} alt="" />
-            <div className="cbInfo">
-              <div className="float-right flex items-center gap-2">
-                <button
-                  className="cb_pen"
-                  onClick={() => handleEditSelect(item.id)}
-                >
-                  <FontAwesomeIcon icon={faPen} />
-                </button>
-                <button
-                  className="cb_trash"
-                  onClick={() => handleTrashSelect(item.id)}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </div>
-              <h1>{item.category_name}</h1>
-            </div>
+      {categoryData.length > 0 ? (
+        <>
+          <div className="pl-searchBox">
+            <input type="text" placeholder="Search..." />
+            <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
           </div>
-        ))}
-      </div>
+
+          <div className="pl_filter my-4">
+            <button
+              onClick={() => setFilter("All")}
+              className={`${filter === "All" ? "active" : null}`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setFilter("Newest")}
+              className={`${filter === "Newest" ? "active" : null}`}
+            >
+              Newest
+            </button>
+            <button
+              onClick={() => setFilter("Oldest")}
+              className={`${filter === "Oldest" ? "active" : null}`}
+            >
+              Oldest
+            </button>
+            <button
+              onClick={() => setFilter("Disabled")}
+              className={`${filter === "Disabled" ? "active" : null}`}
+            >
+              Disabled
+            </button>
+          </div>
+
+          <div className="cbBox">
+            {categoryData.map((item, index) => (
+              <div key={index} className="cbItem">
+                <img src={`${apiUrl}${item.category_image}`} alt="" />
+                <div className="cbInfo">
+                  <div className="float-right flex items-center gap-2">
+                    <button
+                      className="cb_pen"
+                      onClick={() => handleEditSelect(item.id)}
+                    >
+                      <FontAwesomeIcon icon={faPen} />
+                    </button>
+                    <button
+                      className="cb_trash"
+                      onClick={() => handleTrashSelect(item.id)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
+                  <h1>{item.category_name}</h1>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          <div className="flex flex-col">
+            <FontAwesomeIcon icon={faBoxes} className="text-9xl" />
+            <p className="text-center my-3 text-2xl">No Category Found!</p>
+          </div>
+        </div>
+      )}
 
       {addModal && (
         <AddCategory

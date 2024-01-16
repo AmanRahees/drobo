@@ -12,9 +12,10 @@ import Shop from "./pages/frontend/Shop/Shop";
 import ProuductPage from "./pages/frontend/Shop/ProuductPage";
 import Cart from "./pages/frontend/Cart/Cart";
 import Profile from "./pages/frontend/Profile/Profile";
+import Addresses from "./pages/frontend/Profile/Addresses";
+import AddAddress from "./pages/frontend/Profile/AddAddress";
 import MyOrders from "./pages/frontend/Orders/MyOrders";
 import Checkout from "./pages/frontend/Checkout/Checkout";
-import AddAddress from "./pages/frontend/Checkout/AddAddress";
 
 // Admin
 import AdminLogin from "./pages/backend/Login/Login";
@@ -46,15 +47,13 @@ function App() {
               path="shop/:category/:id/:slug/:var_id"
               element={<ProuductPage />}
             />
-            <Route path="/shop/cart" element={<Cart />} />
 
             <Route element={<AuthRoute />}>
+              <Route path="/shop/cart" element={<Cart />} />
               <Route path="/shop/cart/checkout" element={<Checkout />} />
-              <Route
-                path="/shop/cart/checkout/add-address"
-                element={<AddAddress />}
-              />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/addresses" element={<Addresses />} />
+              <Route path="/profile/add-address" element={<AddAddress />} />
               <Route path="/profile/orders" element={<MyOrders />} />
             </Route>
 

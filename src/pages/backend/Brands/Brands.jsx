@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faTrash,
+  faSearch,
+  faBox,
+} from "@fortawesome/free-solid-svg-icons";
 import Struct from "../../../components/backend/Struct/Struct";
+import Loader from "../../../components/Loader/Loader";
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import AddBrands from "./AddBrands";
@@ -19,12 +25,14 @@ function Brands() {
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     api
       .get("admin/brand")
       .then((response) => {
         if (response.status === 200) {
           setBrandsData(response.data);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -47,6 +55,9 @@ function Brands() {
     setSelectedId(id);
     setEditModal(true);
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Struct>
       <button
@@ -57,62 +68,73 @@ function Brands() {
       </button>
       <h1 className="text-3xl md:text-4xl text-sub-color">Brands</h1>
 
-      <div className="pl-searchBox">
-        <input type="text" placeholder="Search..." />
-        <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
-      </div>
-
-      <div className="pl_filter my-4">
-        <button
-          onClick={() => setFilter("All")}
-          className={`${filter === "All" ? "active" : null}`}
-        >
-          All
-        </button>
-        <button
-          onClick={() => setFilter("Newest")}
-          className={`${filter === "Newest" ? "active" : null}`}
-        >
-          Newest
-        </button>
-        <button
-          onClick={() => setFilter("Oldest")}
-          className={`${filter === "Oldest" ? "active" : null}`}
-        >
-          Oldest
-        </button>
-        <button
-          onClick={() => setFilter("Most Used")}
-          className={`${filter === "Most Used" ? "active" : null}`}
-        >
-          Most Used
-        </button>
-      </div>
-
-      <div className="cbBox">
-        {brandsData.map((item, index) => (
-          <div key={index} className="cbItem">
-            <img src={`${apiUrl}${item.brand_image}`} alt="" />
-            <div className="cbInfo">
-              <div className="float-right flex items-center gap-2">
-                <button
-                  className="cb_pen"
-                  onClick={() => handleEditSelect(item.id)}
-                >
-                  <FontAwesomeIcon icon={faPen} />
-                </button>
-                <button
-                  className="cb_trash"
-                  onClick={() => handleTrashSelect(item.id)}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </div>
-              <h1>{item.brand_name}</h1>
-            </div>
+      {brandsData.length > 0 ? (
+        <>
+          <div className="pl-searchBox">
+            <input type="text" placeholder="Search..." />
+            <FontAwesomeIcon icon={faSearch} className="pl-searchIcon" />
           </div>
-        ))}
-      </div>
+
+          <div className="pl_filter my-4">
+            <button
+              onClick={() => setFilter("All")}
+              className={`${filter === "All" ? "active" : null}`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setFilter("Newest")}
+              className={`${filter === "Newest" ? "active" : null}`}
+            >
+              Newest
+            </button>
+            <button
+              onClick={() => setFilter("Oldest")}
+              className={`${filter === "Oldest" ? "active" : null}`}
+            >
+              Oldest
+            </button>
+            <button
+              onClick={() => setFilter("Most Used")}
+              className={`${filter === "Most Used" ? "active" : null}`}
+            >
+              Most Used
+            </button>
+          </div>
+
+          <div className="cbBox">
+            {brandsData.map((item, index) => (
+              <div key={index} className="cbItem">
+                <img src={`${apiUrl}${item.brand_image}`} alt="" />
+                <div className="cbInfo">
+                  <div className="float-right flex items-center gap-2">
+                    <button
+                      className="cb_pen"
+                      onClick={() => handleEditSelect(item.id)}
+                    >
+                      <FontAwesomeIcon icon={faPen} />
+                    </button>
+                    <button
+                      className="cb_trash"
+                      onClick={() => handleTrashSelect(item.id)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
+                  <h1>{item.brand_name}</h1>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          <div className="flex flex-col">
+            <FontAwesomeIcon icon={faBox} className="text-9xl" />
+            <p className="text-center my-3 text-2xl">No Brands Found!</p>
+          </div>
+        </div>
+      )}
 
       {addModal && (
         <AddBrands
