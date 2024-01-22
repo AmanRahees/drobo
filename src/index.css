@@ -86,3 +86,11 @@ body::-webkit-scrollbar {
 .bg-backend {
   background: #121212;
 }
+
+.sub-outline-2 {
+  -webkit-text-stroke: 1px var(--sub-color);
+  background: linear-gradient(190deg, var(--sub-color) 60%, #fff 40%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}

@@ -30,19 +30,13 @@ function StatusBtn({ status, clickEvent }) {
     );
   } else if (status === "Delivered") {
     return (
-      <button
-        onClick={clickEvent}
-        className="bg-green-600 px-3 py-1 rounded-md text-sm"
-      >
+      <button className="bg-green-600 px-3 py-1 rounded-md text-sm">
         Delivered
       </button>
     );
   } else if (status === "Order Cancelled") {
     return (
-      <button
-        onClick={clickEvent}
-        className="bg-yellow-500 px-3 py-1 rounded-md text-sm"
-      >
+      <button className="bg-yellow-500 px-3 py-1 rounded-md text-sm">
         Order Cancelled
       </button>
     );

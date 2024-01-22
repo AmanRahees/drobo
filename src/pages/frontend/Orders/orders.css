@@ -1,0 +1,20 @@
+._orderCardBox {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  padding: 20px;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+}
+
+._orderImgWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 576px) {
+  ._orderCardBox {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 15px;
+  }
+}

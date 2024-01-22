@@ -5,13 +5,15 @@ import {
   faBarsStaggered,
   faBox,
   faBoxes,
+  faCartFlatbed,
   faDashboard,
-  faGear,
   faPowerOff,
   faTableCells,
+  faTags,
   faTruckFast,
   faUserCircle,
   faUsers,
+  faPanorama,
 } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "../../../contexts/AuthContext";
 import Modal from "../Modal/Modal";
@@ -26,7 +28,7 @@ function Sidebar() {
     <>
       <div className={`sidebar ${sideXtnd ? "active" : ""}`}>
         <div className="sidebar-logo">
-          <h1 className="text-sub-color">drobo.</h1>
+          <h1 className="sub-outline-2">drobo.</h1>
           <button onClick={() => setSideXtnd(!sideXtnd)}>
             <FontAwesomeIcon className="text-2xl" icon={faBarsStaggered} />
           </button>
@@ -37,8 +39,8 @@ function Sidebar() {
             icon={faUserCircle}
           />
           <div className="sidebar-details capitalize">
-            <h2 className="text-lg">Aman Rahees</h2>
-            <span className="text-gray-600">Admin</span>
+            <h2 className="text-stone-300">Aman Rahees</h2>
+            <small className="text-gray-600">Admin</small>
           </div>
         </div>
         <div className="sidebar-Items">
@@ -85,6 +87,15 @@ function Sidebar() {
             <span> &nbsp; Products</span>
           </Link>
           <Link
+            to="/admin/inventory"
+            className={`sidebar-Item ${
+              location.pathname.includes("/admin/inventory") ? "active" : ""
+            }`}
+          >
+            <FontAwesomeIcon icon={faCartFlatbed} />{" "}
+            <span> &nbsp; Inventory</span>
+          </Link>
+          <Link
             to="/admin/orders"
             className={`sidebar-Item ${
               location.pathname.includes("/admin/orders") ? "active" : ""
@@ -93,12 +104,23 @@ function Sidebar() {
             <FontAwesomeIcon icon={faTruckFast} /> <span> &nbsp; Orders</span>
           </Link>
           <Link
-            to="/admin/settings"
+            to="/admin/offer-management/category"
             className={`sidebar-Item ${
-              location.pathname.includes("/admin/settings") ? "active" : ""
+              location.pathname.includes("/admin/offer-management")
+                ? "active"
+                : ""
             }`}
           >
-            <FontAwesomeIcon icon={faGear} /> <span> &nbsp; Settings</span>
+            <FontAwesomeIcon icon={faTags} />{" "}
+            <span> &nbsp; Offer Management</span>
+          </Link>
+          <Link
+            to="/admin/banners"
+            className={`sidebar-Item ${
+              location.pathname.includes("/admin/banners") ? "active" : ""
+            }`}
+          >
+            <FontAwesomeIcon icon={faPanorama} /> <span> &nbsp; Banners</span>
           </Link>
           <button
             onClick={() => setShowLogout(!showLogout)}

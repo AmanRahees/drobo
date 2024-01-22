@@ -10,7 +10,10 @@ import {
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/backend/Struct/Struct";
+import Modal from "../../../components/backend/Modal/Modal";
 import Loader from "../../../components/Loader/Loader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Variants() {
   const api = useAxios();
@@ -44,6 +47,7 @@ function Variants() {
     } else {
       setSelected((prevSelected) => [...prevSelected, id]);
     }
+    console.log(id);
   };
   const handleStatusChange = (id) => {
     if (selected.includes(id)) {
@@ -54,6 +58,28 @@ function Variants() {
       setSelected((prevSelected) => [...prevSelected, id]);
     }
   };
+  const hanldeToastMessages = (type, message) => {
+    if (type === "success") {
+      toast.success(message);
+    } else if (type === "error") {
+      toast.error(message);
+    }
+  };
+  const handleVariantsDelete = () => {
+    setDeleteModal(false);
+    api
+      .delete("admin/variants", { data: selected })
+      .then((response) => {
+        setVariants((prevVariants) =>
+          prevVariants.filter((variant) => !selected.includes(variant.id))
+        );
+        setSelected([]);
+        hanldeToastMessages("success", "Deleted Successfull!");
+      })
+      .catch((error) => {
+        hanldeToastMessages("error", "Error Occured!");
+      });
+  };
   if (loading) {
     return <Loader />;
   }
@@ -62,7 +88,7 @@ function Variants() {
       <div className="float-right flex flex-col-reverse md:flex-row gap-2 mb-2">
         {selected.length > 0 && (
           <button
-            onClick={() => console.log(selected)}
+            onClick={() => setDeleteModal(true)}
             className="bg-red-600 py-1 px-3 rounded-md"
           >
             <FontAwesomeIcon icon={faTrash} /> ({selected.length})
@@ -101,7 +127,7 @@ function Variants() {
                     className="togglerInput my-2 float-end"
                   />
                 </div>
-                <div className="_variantListDown_ p-2 overflow-hidden">
+                <div className="_variantListDown_ p-2 overflow-hidden bg-121">
                   <button
                     onClick={() => navigate(`/admin/products/${variant?.id}`)}
                     className="float-end bg-blue-900 p-2 px-2 rounded text-sm"
@@ -129,6 +155,37 @@ function Variants() {
           </div>
         </div>
       )}
+
+      {deleteModal && (
+        <Modal>
+          <h1 className="modal-heading">Delete Product</h1>
+          <div className="modal-divider"></div>
+          <p className="modal-content">
+            Are you sure that you want to delete this Variant?
+          </p>
+          <div className="modal-divider"></div>
+          <div className="modal-btns">
+            <button
+              onClick={() => setDeleteModal(false)}
+              className="bg-gray-800"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => handleVariantsDelete()}
+              className="bg-red-600"
+            >
+              Yes
+            </button>
+          </div>
+        </Modal>
+      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        pauseOnHover={false}
+        theme="dark"
+      />
     </Struct>
   );
 }

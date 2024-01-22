@@ -30,6 +30,19 @@
   -webkit-box-orient: vertical;
 }
 
+@keyframes successCheckPing {
+  0% {
+    transform: scale(0.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#successCheck {
+  animation: successCheckPing 1s forwards;
+}
+
 @media (max-width: 576px) {
   ._cktAdds {
     display: grid;

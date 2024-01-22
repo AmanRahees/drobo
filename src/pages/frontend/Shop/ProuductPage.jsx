@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import AuthContext from "../../../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
@@ -10,6 +9,7 @@ import axiosInstance from "../../../services/axios";
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/frontend/Struct/Struct";
+import Loader from "../../../components/Loader/Loader";
 import ProductImgBlock from "../../../components/frontend/ProductBlock/ProductBlock";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,31 +18,25 @@ import "./product.css";
 function ProuductPage() {
   const api = useAxios();
   let { id, var_id, slug } = useParams();
-  const { setLoading } = useContext(AuthContext);
   const [productData, setProductData] = useState();
   const [curr_variant, setCurrentVariant] = useState();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
     axiosInstance
       .get(`/shop/product/${id}`)
       .then((response) => {
         setProductData(response.data);
-        console.log(response.data);
         setCurrentVariant(
           response.data?.variants.find(
             (variant) => variant.variant_id === +var_id
           )
         );
-        console.log(
-          response.data?.variants.find(
-            (variant) => variant.variant_id === +var_id
-          )
-        );
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-    setLoading(false);
     // eslint-disable-next-line
   }, []);
   const getDefaultImage = (variant) => {
@@ -110,12 +104,17 @@ function ProuductPage() {
     api
       .post(`cart/${var_id}`)
       .then((response) => {
-        toast.success("Added to Cart!");
+        if (response.status === 201) {
+          toast.success("Added to Cart!");
+        } else if (response.status === 200) {
+          toast.error("Out of Stock!");
+        }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Struct>
       <div className="bg-white p-1 md:p-3 rounded-md">

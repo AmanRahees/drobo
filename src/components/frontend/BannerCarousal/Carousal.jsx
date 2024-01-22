@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { apiUrl } from "../../../services/constants";
 import "./carousal.css";
 
 const Carousal = ({ banners }) => {
@@ -29,9 +30,9 @@ const Carousal = ({ banners }) => {
     <div className="_banner_carousal">
       <div className="carousal_items">
         {banners.map((banner, index) => (
-          <Link key={index}>
+          <Link to={banner.url_path} key={index}>
             <img
-              src={banner}
+              src={apiUrl + banner.banner}
               className={currentIndex === index ? "active" : "inactive"}
               alt={banner}
             />

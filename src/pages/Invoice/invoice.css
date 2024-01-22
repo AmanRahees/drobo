@@ -1,0 +1,25 @@
+.invoice {
+  background: #fff;
+  color: var(--primary-color);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.invoiceTable {
+  width: 100%;
+  text-align: left;
+}
+
+.invoiceTable thead {
+  background: #000;
+  color: #fff;
+}
+
+.invoiceTable thead th {
+  padding: 10px;
+}
+
+.invoiceTable tbody td {
+  padding: 10px;
+  border-bottom: 1px solid gray;
+}

@@ -82,7 +82,10 @@ function Navbar() {
                     <FontAwesomeIcon className="text-xl" icon={faCircleUser} />
                     <span>My Profile</span>
                   </Link>
-                  <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
+                  <Link
+                    to="/profile/orders"
+                    className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2"
+                  >
                     <FontAwesomeIcon className="text-lg" icon={faBoxOpen} />
                     Orders
                   </Link>

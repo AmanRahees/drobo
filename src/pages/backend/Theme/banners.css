@@ -1,0 +1,14 @@
+.bannerBox_ {
+  position: relative;
+  margin: 20px 0;
+}
+
+.bannerItem_ {
+  position: relative;
+}
+
+.bannerItem_ img {
+  width: 100%;
+  aspect-ratio: 4/1;
+  border-radius: 8px;
+}
