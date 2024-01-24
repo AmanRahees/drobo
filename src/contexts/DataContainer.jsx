@@ -12,6 +12,8 @@ export const ShopDataProvider = ({ children }) => {
   const [brandsData, setBrandData] = useState([]);
   const [cartCounter, setCartCounter] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [activeCoupon, setActiveCoupon] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -37,6 +39,8 @@ export const ShopDataProvider = ({ children }) => {
       .then((response) => {
         setCartCounter(response.data.cart_counter);
         setTotalAmount(response.data.total_amount);
+        setActiveCoupon(response.data.active_coupon);
+        setDiscountAmount(response.data.discount_amount);
       })
       .catch((error) => {
         console.log(error);
@@ -46,8 +50,14 @@ export const ShopDataProvider = ({ children }) => {
   let ContextData = {
     category_data: categoryData,
     brands_data: brandsData,
+    setCartCounter: setCartCounter,
     cartCounter: cartCounter,
+    setTotalAmount: setTotalAmount,
     totalAmount: totalAmount,
+    activeCoupon: activeCoupon,
+    setActiveCoupon: setActiveCoupon,
+    discountAmount: discountAmount,
+    setDiscountAmount: setDiscountAmount,
   };
 
   return (

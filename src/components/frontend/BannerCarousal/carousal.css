@@ -22,7 +22,7 @@
 
 @keyframes bannerFade {
   from {
-    opacity: 0.2;
+    opacity: 0.6;
   }
   to {
     opacity: 1;

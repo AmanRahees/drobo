@@ -139,15 +139,24 @@ function Navbar() {
             <Link
               to="/shop"
               className={`${
-                location.pathname === "/shop"
+                location.pathname.includes("/shop")
                   ? "border-b border-teal-600 text-teal-600"
                   : ""
               }`}
             >
               Shop
             </Link>
+            <Link
+              to="/categories"
+              className={`${
+                location.pathname.includes("/categories")
+                  ? "border-b border-teal-600 text-teal-600"
+                  : ""
+              }`}
+            >
+              Categories
+            </Link>
             <Link>Offer Zone</Link>
-            <Link>Contact</Link>
           </div>
         </div>
       </div>

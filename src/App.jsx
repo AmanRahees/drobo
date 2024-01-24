@@ -9,6 +9,7 @@ import Home from "./pages/frontend/Home/Home";
 import Login from "./pages/frontend/Auth/Login";
 import SignUp from "./pages/frontend/Auth/SignUp";
 import Shop from "./pages/frontend/Shop/Shop";
+import AllCategories from "./pages/frontend/Home/AllCategories";
 import ProuductPage from "./pages/frontend/Shop/ProuductPage";
 import Cart from "./pages/frontend/Cart/Cart";
 import Profile from "./pages/frontend/Profile/Profile";
@@ -17,7 +18,6 @@ import AddAddress from "./pages/frontend/Profile/AddAddress";
 import MyOrders from "./pages/frontend/Orders/MyOrders";
 import OrderView from "./pages/frontend/Orders/OrderView";
 import Checkout from "./pages/frontend/Checkout/Checkout";
-import Success from "./pages/frontend/Checkout/Success";
 
 // Admin
 import AdminLogin from "./pages/backend/Login/Login";
@@ -36,7 +36,6 @@ import OrderDetail from "./pages/backend/Orders/OrderDetail";
 import OfferZone from "./pages/backend/OfferZone/OfferZone";
 import Banners from "./pages/backend/Theme/Banners";
 import AddBanner from "./pages/backend/Theme/AddBanner";
-import Invoice from "./pages/Invoice/Invoice";
 
 function App() {
   return (
@@ -50,9 +49,8 @@ function App() {
             </Route>
 
             <Route path="/" element={<Home />} />
-            <Route path="/invoice" element={<Invoice />} />
+            <Route path="/categories" element={<AllCategories />} />
             <Route path="/shop" element={<Shop />} />
-            <Route path="/success" element={<Success />} />
             <Route
               path="shop/:category/:id/:slug/:var_id"
               element={<ProuductPage />}

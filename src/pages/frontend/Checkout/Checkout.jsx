@@ -7,16 +7,25 @@ import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/frontend/Struct/Struct";
 import Loader from "../../../components/Loader/Loader";
+import OrderSuccessPage from "./Success";
 import "./checkout.css";
 
 function Checkout() {
   const api = useAxios();
   const navigate = useNavigate();
-  const { totalAmount } = useContext(DataContainer);
+  const {
+    totalAmount,
+    discountAmount,
+    setTotalAmount,
+    setDiscountAmount,
+    setCartCounter,
+  } = useContext(DataContainer);
   const [addresses, setAddresses] = useState([]);
   const [cartData, setCartData] = useState([]);
+  const [responseData, setResponseData] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [successPage, setSuccessPage] = useState(false);
   useEffect(() => {
     api
       .get("profile/address")
@@ -41,8 +50,6 @@ function Checkout() {
     // eslint-disable-next-line
   }, []);
   const handlePlaceOrder = (payment_method) => {
-    console.log(selectedAddress);
-    console.log(payment_method);
     if (selectedAddress !== 0) {
       const data = {
         address: selectedAddress,
@@ -50,12 +57,21 @@ function Checkout() {
       };
       api
         .post("checkout/place-order", data)
-        .then((response) => {})
+        .then((response) => {
+          setCartCounter(0);
+          setTotalAmount(0);
+          setDiscountAmount(0);
+          setResponseData(response.data);
+          setSuccessPage(true);
+        })
         .catch((error) => {});
     }
   };
   if (loading) {
     return <Loader />;
+  }
+  if (successPage) {
+    return <OrderSuccessPage responseData={responseData} />;
   }
   return (
     <Struct>
@@ -170,21 +186,25 @@ function Checkout() {
             <div className="my-3">
               <div className="flex justify-between">
                 <span className="text-md">SUBTOTAL</span>
-                <span className="text-gray-200">${totalAmount}</span>
+                <span className="text-gray-200">₹{totalAmount}</span>
               </div>
               <div className="flex justify-between my-3">
                 <span className="text-md">DISCOUNT</span>
-                <span className="text-gray-200">-</span>
+                <span className="text-gray-200">
+                  {discountAmount > 0 ? `-₹${discountAmount}` : "-"}
+                </span>
               </div>
             </div>
             <hr />
             <div className="my-3">
               <div className="flex justify-between">
                 <span className="text-md">TOTAL</span>
-                <span className="text-gray-200">$328974</span>
+                <span className="text-gray-200 font-bold">
+                  ₹{totalAmount - discountAmount}
+                </span>
               </div>
               <button
-                onClick={() => handlePlaceOrder("COD")}
+                onClick={() => handlePlaceOrder("Cash on Delivery")}
                 className="w-full bg-teal-600 py-2 my-2"
               >
                 Place Order

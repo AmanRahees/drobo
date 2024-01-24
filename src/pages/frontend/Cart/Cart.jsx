@@ -6,11 +6,23 @@ import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/frontend/Struct/Struct";
 import Loader from "../../../components/Loader/Loader";
 import emptyCart from "../../../assets/imgs/empty-cart.png";
+import CouponBox from "./CouponBox";
 import "./cart.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose, faTicket } from "@fortawesome/free-solid-svg-icons";
 
 function Cart() {
   const api = useAxios();
-  const { totalAmount } = useContext(DataContainer);
+  const {
+    totalAmount,
+    setTotalAmount,
+    cartCounter,
+    setCartCounter,
+    activeCoupon,
+    setActiveCoupon,
+    discountAmount,
+    setDiscountAmount,
+  } = useContext(DataContainer);
   const [cartData, setCartData] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -29,10 +41,14 @@ function Cart() {
     const updatedCartData = cartData.map((item) =>
       item.id === id ? { ...item, quantity: item.quantity + 1 } : item
     );
+    const IncreasingCartItem = cartData.find((item) => item.id === id);
     api
       .put(`cart/${id}`, { action: "increment" })
       .then((response) => {
         setCartData(updatedCartData);
+        setTotalAmount(
+          totalAmount + IncreasingCartItem.cart_product.offer_price
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -42,10 +58,14 @@ function Cart() {
     const updatedCartData = cartData.map((item) =>
       item.id === id ? { ...item, quantity: item.quantity - 1 } : item
     );
+    const decreasingCartItem = cartData.find((item) => item.id === id);
     api
       .put(`cart/${id}`, { action: "decrement" })
       .then((response) => {
         setCartData(updatedCartData);
+        setTotalAmount(
+          totalAmount - decreasingCartItem.cart_product.offer_price
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -53,14 +73,28 @@ function Cart() {
   };
   const removeCartItem = (id) => {
     const updatedCartData = cartData.filter((item) => item.id !== id);
+    const removedCartItem = cartData.find((item) => item.id === id);
+    const removedItemTotal =
+      removedCartItem.cart_product.offer_price * removedCartItem.quantity;
     api
       .delete(`cart/${id}`)
       .then((response) => {
+        setTotalAmount(totalAmount - removedItemTotal);
+        setCartCounter(cartCounter - 1);
         setCartData(updatedCartData);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+  const RemoveCoupon = () => {
+    api
+      .put(`profile/coupon/${activeCoupon?.id}`)
+      .then((response) => {
+        setActiveCoupon([]);
+        setDiscountAmount(0);
+      })
+      .catch((error) => {});
   };
   if (loading) {
     return <Loader />;
@@ -170,7 +204,24 @@ function Cart() {
                           </div>
                         </div>
                       </td>
-                      <td>₹{cartItem.cart_product.price}</td>
+                      <td>
+                        {cartItem.cart_product.max_offer > 0 ? (
+                          <p className="text-green-700 text-lg">
+                            ₹
+                            {cartItem.cart_product.offer_price.toLocaleString(
+                              "en-IN"
+                            )}{" "}
+                            <small className="line-through text-gray-700 text-xs">
+                              ₹
+                              {cartItem.cart_product.price.toLocaleString(
+                                "en-IN"
+                              )}
+                            </small>
+                          </p>
+                        ) : (
+                          <p className="">₹{cartItem.cart_product.price}</p>
+                        )}
+                      </td>
                       <td>
                         <div className="flex overflow-hidden rounded-lg w-max bg-slate-100">
                           <button
@@ -195,7 +246,10 @@ function Cart() {
                         </div>
                       </td>
                       <td>
-                        ₹{cartItem.cart_product.price * cartItem.quantity}
+                        ₹
+                        {(
+                          cartItem.cart_product.offer_price * cartItem.quantity
+                        ).toLocaleString("en-IN")}
                       </td>
                       <td>
                         <button
@@ -220,6 +274,24 @@ function Cart() {
                         {cartItem.cart_product.product.product_name}
                       </span>
                       <small className="block text-xs">(Red, 128 GB)</small>
+                      {cartItem.cart_product.max_offer > 0 ? (
+                        <span className="font-bold text-green-700 text-[12px]">
+                          ₹
+                          {cartItem.cart_product.offer_price.toLocaleString(
+                            "en-IN"
+                          )}{" "}
+                          <strike className="text-[6px] text-gray-700">
+                            ₹
+                            {cartItem.cart_product.price.toLocaleString(
+                              "en-IN"
+                            )}
+                          </strike>
+                        </span>
+                      ) : (
+                        <span className="font-bold">
+                          ₹{cartItem.cart_product.price.toLocaleString("en-IN")}
+                        </span>
+                      )}
                     </div>
                     <div className="sm_cartItemF">
                       <div className="flex justify-between items-center">
@@ -243,11 +315,18 @@ function Cart() {
                           </button>
                         </div>
                         <span className="font-bold">
-                          ₹{cartItem.cart_product.price}
+                          ₹
+                          {(
+                            cartItem.cart_product.offer_price *
+                            cartItem.quantity
+                          ).toLocaleString("en-IN")}
                         </span>
                       </div>
                     </div>
-                    <button className="absolute -right-1 text-center -top-1 z-10 bg-white text-slate-400 text-xs rounded-full w-5 h-5 border">
+                    <button
+                      onClick={() => removeCartItem(cartItem.id)}
+                      className="absolute -right-1 text-center -top-1 z-10 bg-white text-slate-400 text-xs rounded-full w-5 h-5 border"
+                    >
                       &#128473;
                     </button>
                   </div>
@@ -259,33 +338,47 @@ function Cart() {
               <hr />
               <div className="my-3">
                 <label className="block">Do you have a promo code?</label>
-                <form className="flex my-2">
-                  <input
-                    type="text"
-                    className="w-full outline-none text-gray-700 p-2"
-                    maxLength={10}
-                  />
-                  <button type="button" className="bg-teal-600 py-2 px-4">
-                    Apply
-                  </button>
-                </form>
+                <CouponBox
+                  setTotalAmount={setTotalAmount}
+                  totalAmount={totalAmount}
+                  activeCoupon={activeCoupon}
+                  setActiveCoupon={setActiveCoupon}
+                  discountAmount={discountAmount}
+                  setDiscountAmount={setDiscountAmount}
+                />
               </div>
+              {Object.keys(activeCoupon).length !== 0 &&
+                activeCoupon.coupon && (
+                  <div className="my-3 text-center">
+                    <span className="text-green-500 tracking-widest">
+                      <FontAwesomeIcon icon={faTicket} />{" "}
+                      {activeCoupon?.coupon.coupon_code}{" "}
+                    </span>
+                    <button onClick={RemoveCoupon} className="text-red-600">
+                      <FontAwesomeIcon icon={faClose} />
+                    </button>
+                  </div>
+                )}
               <hr />
               <div className="my-3">
                 <div className="flex justify-between">
                   <span className="text-md">SUBTOTAL</span>
-                  <span className="text-gray-200">${totalAmount}</span>
+                  <span className="text-gray-200">&#8377;{totalAmount}</span>
                 </div>
                 <div className="flex justify-between my-3">
                   <span className="text-md">DISCOUNT</span>
-                  <span className="text-gray-200">-</span>
+                  <span className="text-gray-200">
+                    {discountAmount > 0 ? `-₹${discountAmount}` : "-"}
+                  </span>
                 </div>
               </div>
               <hr />
               <div className="my-3">
                 <div className="flex justify-between">
                   <span className="text-md">TOTAL</span>
-                  <span className="text-gray-200">${totalAmount}</span>
+                  <span className="text-gray-200 font-bold text-md">
+                    ${totalAmount - discountAmount}
+                  </span>
                 </div>
                 <Link
                   to="checkout"

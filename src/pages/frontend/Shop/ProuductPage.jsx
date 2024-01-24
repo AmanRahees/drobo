@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBoltLightning,
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
+import DataContainer from "../../../contexts/DataContainer";
 import axiosInstance from "../../../services/axios";
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
@@ -17,6 +18,8 @@ import "./product.css";
 
 function ProuductPage() {
   const api = useAxios();
+  const { setCartCounter, cartCounter, totalAmount, setTotalAmount } =
+    useContext(DataContainer);
   let { id, var_id, slug } = useParams();
   const [productData, setProductData] = useState();
   const [curr_variant, setCurrentVariant] = useState();
@@ -34,9 +37,7 @@ function ProuductPage() {
         );
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
     // eslint-disable-next-line
   }, []);
   const getDefaultImage = (variant) => {
@@ -90,7 +91,6 @@ function ProuductPage() {
     ),
   ];
   const handleVariantChange = (selectedVariant) => {
-    console.log(selectedVariant);
     if (selectedVariant !== undefined) {
       window.location.href = `/shop/${productData.category.toLowerCase()}/${
         productData.id
@@ -100,13 +100,17 @@ function ProuductPage() {
     }
   };
   const addToCart = () => {
-    console.log(var_id);
     api
       .post(`cart/${var_id}`)
       .then((response) => {
         if (response.status === 201) {
           toast.success("Added to Cart!");
+          setCartCounter(cartCounter + 1);
+          setTotalAmount(totalAmount + curr_variant.offer_price);
         } else if (response.status === 200) {
+          toast.success("Added to Cart!");
+          setTotalAmount(totalAmount + curr_variant.offer_price);
+        } else if (response.status === 204) {
           toast.error("Out of Stock!");
         }
       })
@@ -139,11 +143,17 @@ function ProuductPage() {
               {!color && size && !storage && <>({size})</>}
               {!color && !size && storage && <>({storage})</>}
             </p>
-            <h1 className="_detailPrice">
-              ₹{curr_variant?.price.toLocaleString("en-IN")}{" "}
-              <strike>₹{curr_variant?.price.toLocaleString("en-IN")}</strike>{" "}
-              <span>20%</span>
-            </h1>
+            {curr_variant.max_offer > 0 ? (
+              <h1 className="_detailPrice">
+                ₹{curr_variant?.offer_price.toLocaleString("en-IN")}{" "}
+                <strike>₹{curr_variant?.price.toLocaleString("en-IN")}</strike>{" "}
+                <span>{curr_variant.max_offer}%</span>
+              </h1>
+            ) : (
+              <h1 className="_detailPrice">
+                ₹{curr_variant?.price.toLocaleString("en-IN")}
+              </h1>
+            )}
 
             <div className="_varOption">
               {curr_variant?.attributes.some(
@@ -412,10 +422,21 @@ function ProuductPage() {
                 className="w-10 rounded-md"
               />
             </div>
+            {curr_variant?.stock <= 0 && (
+              <span className="block text-red-600">Out of Stock!</span>
+            )}
+            {curr_variant?.stock >= 1 && curr_variant?.stock <= 10 && (
+              <span className="block text-yellow-600">
+                Only {curr_variant?.stock} left!
+              </span>
+            )}
             <div className="flex gap-2 my-5">
               <button
                 onClick={addToCart}
-                className="bg-primary-color text-white w-1/2 md:w-1/3 py-3 text-sm md:text-base rounded-md"
+                disabled={curr_variant?.stock <= 0}
+                className={`${
+                  curr_variant?.stock <= 0 ? "bg-gray-400" : "bg-primary-color"
+                } text-white w-1/2 md:w-1/3 py-3 text-sm md:text-base rounded-md`}
               >
                 <FontAwesomeIcon icon={faCartShopping} className="mr-3" />
                 Add to Cart

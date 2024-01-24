@@ -1,0 +1,60 @@
+.order-track {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s height 0.3s;
+  transform-origin: top center;
+}
+
+.order-track-step {
+  display: flex;
+  height: 80px;
+}
+
+.order-track-step:last-child {
+  overflow: hidden;
+  height: 4rem;
+}
+
+.order-track-step:last-child .order-track-status span:last-of-type {
+  display: none;
+}
+
+.order-track-status {
+  margin-right: 0.5rem;
+  position: relative;
+}
+
+.order-track-status-dot {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+.order-track-status-line {
+  display: block;
+  margin: 0 auto;
+  width: 2px;
+  height: 80px;
+  background: #ddd;
+}
+
+.order-track-text-stat {
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.order-track-text-sub {
+  font-size: 14px;
+  columns: #333;
+  font-weight: 300;
+}
+
+.order-track-status-dot.active,
+.order-track-status-line.active {
+  background: #0ad90a;
+}

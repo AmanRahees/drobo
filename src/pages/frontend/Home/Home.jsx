@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import DataContainer from "../../../contexts/DataContainer";
 import { apiUrl } from "../../../services/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,8 +18,6 @@ import Loader from "../../../components/Loader/Loader";
 import "./home.css";
 
 function Home() {
-  const navigate = useNavigate();
-  const { category_data } = useContext(DataContainer);
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -45,29 +43,7 @@ function Home() {
   return (
     <Struct>
       <Carousal banners={banners} />
-      <div className="_hm_CtgBox">
-        <div className="_hm_CtgGrid">
-          {category_data.map((category, index) => (
-            <div
-              key={index}
-              className="_hm_CtgItem"
-              onClick={() =>
-                navigate(`shop/${category.category_name.toLowerCase()}`)
-              }
-            >
-              <div className="text-left h-full w-3/5 p-3">
-                <p className="font-bold"> {category.category_name} </p>
-                <span className="block">10 items &rarr;</span>
-              </div>
-              <div className="w-2/5">
-                <img src={apiUrl + category.category_image} alt="" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
       <ProductSlider heading={"New Arrivals"} products={products} />
-      <ProductSlider heading={"Latest Products"} products={products} />
       <ProductSlider heading={"Trending"} products={products} />
       <div className="hm_ecomF">
         <div className="ecomF_Item">

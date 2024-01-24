@@ -1,7 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../../../contexts/AuthContext";
-import { jwtDecode } from "jwt-decode";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../../services/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,13 +7,14 @@ import {
   faEyeSlash,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import Verify from "./Verify";
 import "./auth.css";
 
 function SignUp() {
-  const navigate = useNavigate();
-  const { setAuthTokens, setUserData } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [status, setStatus] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -27,7 +26,7 @@ function SignUp() {
   };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setIsSubmitting(true);
     axiosInstance
       .post("accounts/register", {
         username: formData.username,
@@ -36,19 +35,18 @@ function SignUp() {
       })
       .then((response) => {
         if (response.status === 201) {
-          let data = response.data;
-          setAuthTokens(data);
-          setUserData(jwtDecode(data.access));
-          localStorage.setItem("authTokens", JSON.stringify(data));
-          navigate("/");
+          setStatus(true);
         } else {
-          setError(response.data);
+          setError("Invalid Entry!");
         }
       })
       .catch((error) => {
-        console.log(error);
+        setIsSubmitting(false);
       });
   };
+  if (status) {
+    return <Verify email={formData.email} />;
+  }
   return (
     <div className="authBox_">
       <div className="absolute h-full -z-20 w-full bg-secondary-color">
@@ -114,9 +112,10 @@ function SignUp() {
           <div className="relative">
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-full py-2 bg-primary-color text-white border border-gray-500"
             >
-              Continue
+              {isSubmitting ? "Submitting..." : "Continue"}
             </button>
             <span className="block text-center mt-2">
               Don't have an account ?{" "}

@@ -15,6 +15,7 @@ function OrderView() {
   const { id } = useParams();
   const componentRef = useRef();
   const [orderData, setOrderData] = useState([]);
+  const [trackings, setTrackings] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ function OrderView() {
       .get(`profile/my-orders/${id}`)
       .then((response) => {
         setOrderData(response.data);
-        console.log(response.data);
+        setTrackings(response.data.orderTracks);
         setLoading(false);
       })
       .catch((error) => {});
@@ -97,7 +98,9 @@ function OrderView() {
                   <p className="font-bold text-base md:text-lg">
                     &#8377;{item.price.toLocaleString("en-IN")}{" "}
                   </p>
-                  <small className="block text-gray-400">Qty: 3</small>
+                  <small className="block text-gray-400">
+                    Qty: {item.quantity}
+                  </small>
                 </div>
               </div>
             ))}
@@ -107,7 +110,7 @@ function OrderView() {
             <Invoice ref={componentRef} id={id} />
           </div>
           <div className="my-3">
-            <Tracking />
+            <Tracking orderDate={orderData?.created_at} trackings={trackings} />
           </div>
           <hr />
           <div className="flex my-3">

@@ -1,23 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../../services/useAxios";
 import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/backend/Struct/Struct";
-import Tracking from "../../../components/frontend/Tracking/Tracking";
+import Tracking from "../../../components/backend/Tracking/Tracking";
 import Loader from "../../../components/Loader/Loader";
+import Invoice from "../../Invoice/Invoice";
 
 function OrderDetail() {
   const api = useAxios();
   const { id } = useParams();
+  const componentRef = useRef();
   const [orderData, setOrderData] = useState([]);
+  const [trackings, setTrackings] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     api
       .get(`admin/orders/${id}`)
       .then((response) => {
+        console.log(response.data);
         setOrderData(response.data);
+        setTrackings(response.data.orderTracks);
         setLoading(false);
       })
       .catch((error) => {});
@@ -29,6 +35,9 @@ function OrderDetail() {
     let formattedDate = date.toLocaleDateString("en-US", options);
     return formattedDate;
   };
+  const handleInvoiceDownload = useReactToPrint({
+    content: () => componentRef.current,
+  });
   if (loading) {
     return <Loader />;
   }
@@ -38,7 +47,10 @@ function OrderDetail() {
         <p className="font-bold text-lg md:text-2xl">
           ORDER ID: {orderData.order_no}
         </p>
-        <button className="text-xs bg-sub-color w-max px-2 text-white md:px-3 py-2 rounded-md">
+        <button
+          onClick={handleInvoiceDownload}
+          className="text-xs bg-sub-color w-max px-2 text-white md:px-3 py-2 rounded-md"
+        >
           <FontAwesomeIcon icon={faDownload} />{" "}
           <span className="hidden md:inline">Download Invoice</span>
         </button>
@@ -89,8 +101,11 @@ function OrderDetail() {
             </div>
           ))}
         </div>
+        <div className="hidden">
+          <Invoice ref={componentRef} id={id} />
+        </div>
         <div className="my-3">
-          <Tracking />
+          <Tracking orderDate={orderData?.created_at} trackings={trackings} />
         </div>
         <div className="my-3">
           <div className="w-full my-3">
