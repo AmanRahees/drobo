@@ -262,11 +262,17 @@ function Navbar() {
                     <FontAwesomeIcon icon={faClose} />
                   </button>
                 </div>
-                <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
+                <Link
+                  to="/"
+                  className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2"
+                >
                   <FontAwesomeIcon className="text-xl" icon={faHome} />
                   Home
                 </Link>
-                <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
+                <Link
+                  to="/shop"
+                  className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2"
+                >
                   <FontAwesomeIcon className="text-xl" icon={faShop} />
                   Shop
                 </Link>
@@ -280,13 +286,6 @@ function Navbar() {
                 <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
                   <FontAwesomeIcon className="text-lg" icon={faBlog} />
                   Blogs
-                </Link>
-                <Link className="text-gray-700 px-6 py-3 text-sm flex items-center gap-2">
-                  <FontAwesomeIcon
-                    className="text-lg"
-                    icon={faCircleQuestion}
-                  />
-                  Contact
                 </Link>
               </>
             )}

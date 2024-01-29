@@ -8,6 +8,7 @@ import { apiUrl } from "../../../services/constants";
 import Struct from "../../../components/frontend/Struct/Struct";
 import Loader from "../../../components/Loader/Loader";
 import OrderSuccessPage from "./Success";
+import Razorpay from "./Razorpay";
 import "./checkout.css";
 
 function Checkout() {
@@ -209,6 +210,12 @@ function Checkout() {
               >
                 Place Order
               </button>
+              <Razorpay
+                selectedAddress={selectedAddress}
+                grandTotal={totalAmount - discountAmount}
+                setResponseData={setResponseData}
+                setSuccessPage={setSuccessPage}
+              />
             </div>
           </div>
         </div>

@@ -72,11 +72,6 @@
   padding: 6px;
   border-radius: 2px;
   text-align: center;
-  text-transform: uppercase;
-}
-
-.variantTable_ tbody input::placeholder {
-  text-transform: none;
 }
 
 .bg-121 {

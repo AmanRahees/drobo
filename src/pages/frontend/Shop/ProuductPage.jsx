@@ -112,6 +112,8 @@ function ProuductPage() {
           setTotalAmount(totalAmount + curr_variant.offer_price);
         } else if (response.status === 204) {
           toast.error("Out of Stock!");
+        } else if (response.status === 226) {
+          toast.warning("Maximum Quantity Reached!");
         }
       })
       .catch((error) => {});

@@ -395,7 +395,7 @@ function AddVariant() {
                               handleFieldChange(
                                 item.id,
                                 e.target.name,
-                                e.target.value
+                                e.target.value.toUpperCase()
                               )
                             }
                             value={getAttributeValue(item.id, "COLOR")}
@@ -413,7 +413,7 @@ function AddVariant() {
                               handleFieldChange(
                                 item.id,
                                 e.target.name,
-                                e.target.value
+                                e.target.value.toUpperCase()
                               )
                             }
                             value={getAttributeValue(item.id, "STORAGE")}
@@ -431,7 +431,7 @@ function AddVariant() {
                               handleFieldChange(
                                 item.id,
                                 e.target.name,
-                                e.target.value
+                                e.target.value.toUpperCase()
                               )
                             }
                             value={getAttributeValue(item.id, "SIZE")}
@@ -449,7 +449,7 @@ function AddVariant() {
                               handleFieldChange(
                                 item.id,
                                 e.target.name,
-                                e.target.value
+                                e.target.value.toUpperCase()
                               )
                             }
                             value={getAttributeValue(item.id, "RAM")}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,21 +6,25 @@ import {
   faFolder,
   faPowerOff,
 } from "@fortawesome/free-solid-svg-icons";
+import DataContainer from "../../../contexts/DataContainer";
+import Men from "../../../assets/imgs/men-avatar.jpg";
+import Women from "../../../assets/imgs/womon-avatar.png";
 import "./account.css";
 
 function Account({ children }) {
   const location = useLocation();
+  const { userInfo } = useContext(DataContainer);
   return (
     <div className="pfl-container">
       <div className="_pftCurrUser flex justify-start items-center gap-3">
         <img
           className="w-[60px] border border-zinc-950 rounded-full"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHUndSzxcF1UbSXX3bVILVaUbSIhoc_GEA8g&usqp=CAU"
-          alt=""
+          src={userInfo?.gender === "Female" ? Women : Men}
+          alt="img"
         />
         <div className="text-left">
           <small>Hello,</small>
-          <p>Aman Rahees</p>
+          <p className="capitalize">{userInfo?.username}</p>
         </div>
       </div>
       <div className="_pftSideBar">

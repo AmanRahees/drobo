@@ -19,7 +19,7 @@ function ProductOffer() {
   });
   useEffect(() => {
     api
-      .get("admin/products")
+      .get("admin/get-products")
       .then((response) => {
         let data = response.data;
         let productsOnOffer = data.filter(
@@ -97,46 +97,57 @@ function ProductOffer() {
   return (
     <>
       {offerProducts.length > 0 ? (
-        <table className="backendTable">
-          <thead className="text-center">
-            <tr>
-              <th>#</th>
-              <th>Product</th>
-              <th>Offer %</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {offerProducts.map((product, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{product.product_name}</td>
-                <td>
-                  {product.product_offer > 0 ? (
-                    <span className="text-green-600">
-                      {product.product_offer}%
-                    </span>
-                  ) : (
-                    <span>-</span>
-                  )}
-                </td>
-                <td>
-                  <button
-                    disabled={product.product_offer < 1}
-                    onClick={() => handleRemoveOffer(product.id)}
-                    className={`${
-                      product.product_offer > 0
-                        ? "text-red-600"
-                        : "text-gray-400"
-                    }`}
-                  >
-                    <FontAwesomeIcon icon={faCircleXmark} />
-                  </button>
-                </td>
+        <>
+          <table className="backendTable">
+            <thead className="text-center">
+              <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Offer %</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-center">
+              {offerProducts.map((product, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{product.product_name}</td>
+                  <td>
+                    {product.product_offer > 0 ? (
+                      <span className="text-green-600">
+                        {product.product_offer}%
+                      </span>
+                    ) : (
+                      <span>-</span>
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      disabled={product.product_offer < 1}
+                      onClick={() => handleRemoveOffer(product.id)}
+                      className={`${
+                        product.product_offer > 0
+                          ? "text-red-600"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      <FontAwesomeIcon icon={faCircleXmark} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex justify-end mt-5">
+            <button
+              onClick={() => setShowAddModal(true)}
+              to="/admin/brands"
+              className="p-2 text-sm bg-sub-color text-center rounded-lg"
+            >
+              + Add Offers
+            </button>
+          </div>
+        </>
       ) : (
         <div className="flex justify-center items-center h-full">
           <div className="flex flex-col items-center">
@@ -154,7 +165,7 @@ function ProductOffer() {
       )}
       {showAddModal && (
         <Modal>
-          <p className="modal-heading">Add Brand Offer</p>
+          <p className="modal-heading">Add Product Offer</p>
           <div className="modal-divider"></div>
           <div className="md:w-[400px]">
             <div className="relative flex items-center gap-3">

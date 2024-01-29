@@ -19,22 +19,32 @@ import "./product.css";
 function Products() {
   const api = useAxios();
   const navigate = useNavigate();
+  const pageSize = 12;
   const [productsData, setProductsData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     api
-      .get("admin/products")
+      .get(`admin/products?page=${page}`)
       .then((response) => {
-        setProductsData(response.data);
+        setProductsData(response.data.results);
+        setTotalItems(response.data.count);
         setLoading(false);
       })
       .catch((error) => {
         toast.error("Server out!");
       });
     // eslint-disable-next-line
-  }, []);
+  }, [page]);
+  const getTotalPages = () => Math.ceil(totalItems / pageSize);
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= getTotalPages()) {
+      setPage(newPage);
+    }
+  };
   const handleSelected = (id) => {
     if (selected.includes(id)) {
       setSelected((prevSelected) =>
@@ -139,6 +149,35 @@ function Products() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="flex justify-end my-3">
+            <button
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}
+              className="p-2 bg-121 w-[40px] h-[40px] border border-neutral-900"
+            >
+              {"<"}
+            </button>
+            {Array.from({ length: getTotalPages() }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handlePageChange(index + 1)}
+                style={{ fontWeight: page === index + 1 ? "bold" : "normal" }}
+                className={`p-2 ${
+                  page === index + 1 ? "bg-sub-color" : "bg-121"
+                } w-[40px] h-[40px] border border-neutral-900`}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page === getTotalPages()}
+              className="p-2 bg-121 w-[40px] h-[40px] border border-neutral-900"
+            >
+              {">"}
+            </button>
           </div>
         </>
       ) : (

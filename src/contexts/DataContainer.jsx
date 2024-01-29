@@ -10,6 +10,7 @@ export const ShopDataProvider = ({ children }) => {
   const { setLoading, userData } = useContext(AuthContext);
   const [categoryData, setCategoryData] = useState([]);
   const [brandsData, setBrandData] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
   const [cartCounter, setCartCounter] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
@@ -27,6 +28,7 @@ export const ShopDataProvider = ({ children }) => {
         console.log(error);
       });
     if (userData) {
+      getUserInfo();
       getUserItems();
     }
     setLoading(false);
@@ -47,6 +49,17 @@ export const ShopDataProvider = ({ children }) => {
       });
   };
 
+  const getUserInfo = () => {
+    api
+      .get("profile")
+      .then((response) => {
+        setUserInfo(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   let ContextData = {
     category_data: categoryData,
     brands_data: brandsData,
@@ -58,6 +71,7 @@ export const ShopDataProvider = ({ children }) => {
     setActiveCoupon: setActiveCoupon,
     discountAmount: discountAmount,
     setDiscountAmount: setDiscountAmount,
+    userInfo: userInfo,
   };
 
   return (

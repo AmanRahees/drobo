@@ -15,7 +15,9 @@ import Cart from "./pages/frontend/Cart/Cart";
 import Profile from "./pages/frontend/Profile/Profile";
 import Addresses from "./pages/frontend/Profile/Addresses";
 import AddAddress from "./pages/frontend/Profile/AddAddress";
+import EditAddress from "./pages/frontend/Profile/EditAddress";
 import MyOrders from "./pages/frontend/Orders/MyOrders";
+import MyCoupons from "./pages/frontend/Profile/MyCoupons";
 import OrderView from "./pages/frontend/Orders/OrderView";
 import Checkout from "./pages/frontend/Checkout/Checkout";
 
@@ -62,7 +64,12 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/profile/addresses" element={<Addresses />} />
               <Route path="/profile/add-address" element={<AddAddress />} />
+              <Route
+                path="/profile/edit-address/:id"
+                element={<EditAddress />}
+              />
               <Route path="/profile/orders" element={<MyOrders />} />
+              <Route path="/profile/coupons" element={<MyCoupons />} />
               <Route
                 path="/profile/orders/:id/:order_id"
                 element={<OrderView />}

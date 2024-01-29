@@ -167,7 +167,7 @@ function Orders() {
                   <td className="whitespace-break-spaces">
                     {order.city}, {order.state}
                   </td>
-                  <td>&#8377;{order.total_price.toLocaleString("en-IN")}</td>
+                  <td>&#8377;{order.grand_total.toLocaleString("en-IN")}</td>
                   <td>{order.payment_mode}</td>
                   <td>{formatOrderDate(order.created_at)}</td>
                   <td>

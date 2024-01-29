@@ -8,7 +8,7 @@ import "./shop.css";
 
 function Shop() {
   const navigate = useNavigate();
-  const pageSize = 12;
+  const pageSize = 30;
   const [productsData, setProductsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -116,34 +116,36 @@ function Shop() {
             </div>
           ))}
         </div>
-        <div className="flex justify-center gap-3 my-3">
-          <button
-            onClick={() => handlePageChange(page - 1)}
-            disabled={page === 1}
-            className="md:p-2 bg-primary-color text-white w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
-          >
-            {"<"}
-          </button>
-          {Array.from({ length: getTotalPages() }, (_, index) => (
+        {page > 1 && (
+          <div className="flex justify-center gap-3 my-3">
             <button
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-              style={{ fontWeight: page === index + 1 ? "bold" : "normal" }}
-              className={`${
-                page === index + 1 ? "bg-teal-600" : "bg-primary-color"
-              } w-[30px] h-[30px] md:w-[40px] md:h-[40px] text-white text-xs md:text-lg`}
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}
+              className="md:p-2 bg-primary-color text-white w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
             >
-              {index + 1}
+              {"<"}
             </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(page + 1)}
-            disabled={page === getTotalPages()}
-            className="bg-primary-color text-white w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
-          >
-            {">"}
-          </button>
-        </div>
+            {Array.from({ length: getTotalPages() }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handlePageChange(index + 1)}
+                style={{ fontWeight: page === index + 1 ? "bold" : "normal" }}
+                className={`${
+                  page === index + 1 ? "bg-teal-600" : "bg-primary-color"
+                } w-[30px] h-[30px] md:w-[40px] md:h-[40px] text-white text-xs md:text-lg`}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page === getTotalPages()}
+              className="bg-primary-color text-white w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
+            >
+              {">"}
+            </button>
+          </div>
+        )}
       </div>
     </Struct>
   );

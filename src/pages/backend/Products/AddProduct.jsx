@@ -20,7 +20,7 @@ function AddProduct() {
     description: "NA",
     category: 0,
     brand: 0,
-    status: false,
+    status: true,
   });
   const generateSlug = (title) => {
     return title
@@ -66,7 +66,6 @@ function AddProduct() {
           }
         })
         .catch((error) => {
-          console.log(error);
           toast.error("Something went wrong!");
         });
     }
@@ -78,9 +77,7 @@ function AddProduct() {
         setCategories(response.data.categories);
         setBrands(response.data.brands);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
     // eslint-disable-next-line
   }, []);
   return (

@@ -128,11 +128,11 @@ function Coupons() {
       {showAddModal && (
         <Modal>
           <form onSubmit={handleAddSubmit}>
-            <p className="modal-heading">Add Brand Offer</p>
+            <p className="modal-heading">Add Coupon</p>
             <div className="modal-divider"></div>
             <div className="md:w-[400px]">
               <div className="relative flex items-center gap-3">
-                <label className="block">Product:</label>
+                <label className="block">CODE:</label>
                 <input
                   type="text"
                   name="coupon_code"

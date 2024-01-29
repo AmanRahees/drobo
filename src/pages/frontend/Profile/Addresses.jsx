@@ -45,10 +45,13 @@ function Addresses() {
                   </Link>
                 </div>
                 {addresses.map((address, index) => (
-                  <div className="my-3">
+                  <div key={index} className="my-3">
                     <div className="border bg-slate-50 border-gray-200 p-5 rounded-lg shadow">
                       <div className="float-right">
-                        <Link className="text-blue-500 mr-5">
+                        <Link
+                          to={`/profile/edit-address/${address.id}`}
+                          className="text-blue-500 mr-5"
+                        >
                           <FontAwesomeIcon icon={faPen} />
                         </Link>
                         <button className="text-red-600">
